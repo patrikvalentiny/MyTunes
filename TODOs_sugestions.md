@@ -3,3 +3,4 @@
 - [ ] Connection Pooling
 - [ ] Exception handling
 - [X] Change functionality when song ends
+- [ ] Dependency inversion principle - implement interfaces
