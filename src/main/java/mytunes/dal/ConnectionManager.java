@@ -14,12 +14,11 @@ import java.util.Properties;
 
 /**
  * Class responsible for managing the connection to the database.
- * @author Patrik Valentiny
- * <p>
  * Implementation in this class is BAD practice from my understanding but performs well
  * Closing connection should be done sooner from my understanding not on the application termination
- *
  * This will be fixed in the future versions of the course - considering using C3P0 connection pooling
+ *
+ * @author Patrik Valentiny
  */
 public class ConnectionManager {
     private static final String CONFIG_FILE_NAME = "config.cfg";
