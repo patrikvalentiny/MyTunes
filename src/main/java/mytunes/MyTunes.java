@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import mytunes.dal.DAOTools;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -23,6 +24,11 @@ public class MyTunes extends Application {
         stage.show();
     }
 
+    @Override
+    public void stop() {
+        System.out.println("Closing application");
+        DAOTools.closeAllConnections();
+    }
     public static void main(String[] args) {
         launch();
     }

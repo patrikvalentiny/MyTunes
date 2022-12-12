@@ -81,6 +81,7 @@ public class MainWindowController {
             else
                 model.removeSongsFromMemory();
         });
+        // listener for updating the song time slider
         volumeControlSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             volume = newValue.doubleValue() / 100;
             mediaPlayer.setVolume(volume);

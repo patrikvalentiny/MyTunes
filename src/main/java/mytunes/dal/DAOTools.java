@@ -29,7 +29,10 @@ public class DAOTools {
     public static ResultSet SQLQueryWithRS(String query) throws SQLException {
         Connection con = cm.getConnection();
         Statement stmt = con.createStatement();
-        return stmt.executeQuery(query);
+        ResultSet rs = stmt.executeQuery(query);
+        cm.releaseConnection(con);
+        return rs;
+
     }
 
     /**
@@ -38,10 +41,13 @@ public class DAOTools {
      * @throws SQLException if the query fails
      */
     public static void SQLQuery(String query) throws SQLException {
-        try (Connection con = cm.getConnection()) {
-            Statement stmt = con.createStatement();
-            stmt.execute(query);
-        }
+        Connection con = cm.getConnection();
+        Statement stmt = con.createStatement();
+        stmt.execute(query);
+        cm.releaseConnection(con);
+    }
 
+    public static void closeAllConnections() {
+        cm.closeAllConnections();
     }
 }

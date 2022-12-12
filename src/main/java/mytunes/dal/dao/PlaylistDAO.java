@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static mytunes.dal.DAOTools.*;
-import static mytunes.dal.DAOTools.SQLQueryWithRS;
 
 public class PlaylistDAO {
 
