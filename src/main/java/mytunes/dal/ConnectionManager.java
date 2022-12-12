@@ -10,11 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-/**
- *
- * @author jeppjleemoritzled
- * Used and abused by Team1, thanks again Jeppe ! o/
- */
 
 public class ConnectionManager {
     private static final String CONFIG_FILE_NAME = "config.cfg";
