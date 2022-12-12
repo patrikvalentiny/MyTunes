@@ -26,7 +26,6 @@ public class MyTunes extends Application {
 
     @Override
     public void stop() {
-        System.out.println("Closing application");
         DAOTools.closeAllConnections();
     }
     public static void main(String[] args) {

@@ -83,7 +83,6 @@ public class ConnectionManager {
         for (Connection con : unusedConnections){
             try {
                 con.close();
-                System.out.println(con.isClosed());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
