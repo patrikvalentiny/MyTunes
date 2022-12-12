@@ -474,10 +474,14 @@ public class MainWindowController {
     }
 
     public void allSongsTableViewMouseClicked(MouseEvent mouseEvent) {
-        queue = model.getAllSongs();
-        currentSongIndex = allSongsTableView.getSelectionModel().getSelectedIndex();
+        // TODO: Sometimes playing songs takes too long for no apparent reason
         if (mouseEvent.getClickCount() == 2 && (queue.get(currentSongIndex) != null)) {
+            long before = System.currentTimeMillis();
+            queue = model.getAllSongs();
+            currentSongIndex = allSongsTableView.getSelectionModel().getSelectedIndex();
             playSong(queue.get(currentSongIndex));
+            long after = System.currentTimeMillis();
+            System.out.println("Time: " + (after - before));
         }
     }
 
