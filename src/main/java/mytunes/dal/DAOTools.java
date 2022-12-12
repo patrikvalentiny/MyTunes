@@ -46,4 +46,8 @@ public class DAOTools {
         stmt.execute(query);
         cm.releaseConnection(con);
     }
+
+    public static void closeAllConnections() {
+        cm.closeAllConnections();
+    }
 }

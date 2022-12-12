@@ -6,17 +6,27 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 
+/**
+ * Class responsible for managing the connection to the database.
+ * @author Patrik Valentiny
+ * <p>
+ * Implementation in this class is BAD practice from my understanding but performs well
+ * Closing connection should be done sooner from my understanding not on the application termination
+ *
+ * This will be fixed in the future versions of the course - considering using C3P0 connection pooling
+ */
 public class ConnectionManager {
     private static final String CONFIG_FILE_NAME = "config.cfg";
     private final SQLServerDataSource ds = new SQLServerDataSource();
 
-    List<Connection> unusedConnections = new ArrayList<>();
-    List<Connection> usedConnections = new ArrayList<>();
+    private List<Connection> unusedConnections = new ArrayList<>();
+    private List<Connection> usedConnections = new ArrayList<>();
 
     public ConnectionManager()
     {
@@ -47,14 +57,19 @@ public class ConnectionManager {
             }
         }
     }
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
         if (unusedConnections.isEmpty()){
-            return null;
+            return ds.getConnection();
         } else {
             Connection con = unusedConnections.remove(0);
-            usedConnections.add(con);
-            System.out.println(con);
-            return con;
+            if (con.isValid(0)){
+                usedConnections.add(con);
+                return con;
+            } else {
+                Connection newCon = ds.getConnection();
+                usedConnections.add(newCon);
+                return newCon;
+            }
         }
     }
 
@@ -62,6 +77,25 @@ public class ConnectionManager {
         if (usedConnections.contains(connection)){
             usedConnections.remove(connection);
             unusedConnections.add(0, connection);
+        }
+    }
+
+    public void closeAllConnections(){
+        for (Connection con : unusedConnections){
+            try {
+                con.close();
+                System.out.println(con.isClosed());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        for (Connection con : usedConnections){
+            try {
+                con.close();
+                System.out.println(con.isClosed());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
