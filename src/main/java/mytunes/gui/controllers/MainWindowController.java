@@ -224,7 +224,7 @@ public class MainWindowController {
             } else {
                 Playlist playlist = playlistsTableView.getSelectionModel().getSelectedItem();
                 Song song = songsInPlaylistListView.getSelectionModel().getSelectedItem();
-                int songIndex = songsInPlaylistListView.getSelectionModel().getSelectedIndex();
+                int songIndex = songsInPlaylistListView.getSelectionModel().getSelectedIndex() + 1; // database indexes start from 1
                 model.deleteSongInPlaylist(song, playlist, songIndex);
                 showSongsInPlaylist();
                 showAllPlaylists();
