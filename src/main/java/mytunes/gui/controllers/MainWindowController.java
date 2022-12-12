@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -58,7 +59,7 @@ public class MainWindowController {
     private MediaPlayer mediaPlayer;
 
     private double volume = 0.05;
-    private int currentSongIndex = 0;
+    private int currentSongIndex;
     private List<Song> queue = model.getAllSongs();
 
 
@@ -386,14 +387,19 @@ public class MainWindowController {
         }
     }
 
+
+
     private void setMediaPlayerBehavior(){
         // without this there can be error for unknown duration
         mediaPlayer.setOnReady(() -> {
 
         mediaPlayer.setVolume(volume);
         mediaPlayer.setOnEndOfMedia(this::forwardMusic);
+        // when the song is changed, the progress bar is updated
         songTimeSlider.setMax(mediaPlayer.getTotalDuration().toSeconds());
+        // when the song is changed, the song time label is updated
         lblSongTimeUntilEnd.setText(humanReadableTime(mediaPlayer.getTotalDuration().toSeconds()));
+        //
         mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
             //lblSongTimeUntilEnd.setText(humanReadableTime(mediaPlayer.getTotalDuration().toSeconds() - newValue.toSeconds()));
             if (!isUserChangingSongTime) {
@@ -401,10 +407,19 @@ public class MainWindowController {
                 songTimeSlider.setValue(newValue.toSeconds());
             }
         });
+
+
+        StackPane trackPane = (StackPane) songTimeSlider.lookup(".track");
         songTimeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            // if user is changing time change the current time label
             if (isUserChangingSongTime) {
                 lblSongTimeSinceStart.setText(humanReadableTime(newValue.doubleValue()));
             }
+            // changing color of the slider behind and in front of play-head
+            int sliderValue = (int) ((newValue.doubleValue() / mediaPlayer.getTotalDuration().toSeconds()) * 100) + 1; // times 100 because percentage and +1 because it hides double to int conversion
+            String style = String.format("-fx-background-color: linear-gradient(to right, #2D819D %d%%, #969696 %d%%);",
+                    sliderValue, sliderValue);
+            trackPane.setStyle(style);
         });
         });
     }
