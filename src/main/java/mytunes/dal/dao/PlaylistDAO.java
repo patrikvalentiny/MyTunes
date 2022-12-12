@@ -166,6 +166,7 @@ public class PlaylistDAO {
             List<Song> allSongsInPlaylist = getAllSongsInPlaylist(playlistID);
             for (int i = songIndex; i < allSongsInPlaylist.size() + 1; i++){
                 int oldSongIndex = i+1;
+                // TODO: maybe change to use sql while loop
                 sql = "UPDATE SONG_PLAYLIST_LINK SET songIndex = " + i + " WHERE songIndex = " + oldSongIndex + " AND playlistID = " + playlistID;
                 SQLQuery(sql);
             }
