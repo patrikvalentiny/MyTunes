@@ -136,9 +136,17 @@ public class MainWindowController {
         rewindMusic();
     }
 
+    /**
+     * If the song has been playing for more than 2 seconds, it will be rewinded to the beginning.
+     * Otherwise, the previous song will be played.
+     */
     private void rewindMusic() {
-        currentSongIndex = currentSongIndex == 0 ? queue.size()-1 : currentSongIndex - 1;
-        playSong(queue.get(currentSongIndex));
+        if (mediaPlayer.getCurrentTime().toSeconds() > 2)
+            mediaPlayer.seek(Duration.ZERO);
+        else {
+            currentSongIndex = currentSongIndex == 0 ? queue.size() - 1 : currentSongIndex - 1;
+            playSong(queue.get(currentSongIndex));
+        }
     }
 
     /**
