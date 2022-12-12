@@ -6,6 +6,8 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -16,7 +18,10 @@ import java.util.Properties;
 
 public class ConnectionManager {
     private static final String CONFIG_FILE_NAME = "config.cfg";
-    private final SQLServerDataSource ds;
+    private final SQLServerDataSource ds = new SQLServerDataSource();
+
+    List<Connection> unusedConnections = new ArrayList<>();
+    List<Connection> usedConnections = new ArrayList<>();
 
     public ConnectionManager()
     {
@@ -28,16 +33,40 @@ public class ConnectionManager {
             //throw new RuntimeException(e);
         }
 
-        ds = new SQLServerDataSource();
         ds.setServerName(props.getProperty("SERVER"));
         ds.setDatabaseName(props.getProperty("DATABASE"));
         ds.setPortNumber(Integer.parseInt(props.getProperty("PORT")));
         ds.setUser(props.getProperty("USER"));
         ds.setPassword(props.getProperty("PASSWORD"));
         ds.setTrustServerCertificate(true);
+        generateConnections();
     }
 
-    public Connection getConnection() throws SQLServerException {
-        return ds.getConnection();
+
+    private void generateConnections(){
+        for (int i = 0; i < 10; i++) {
+            try {
+                unusedConnections.add(ds.getConnection());
+            } catch (SQLServerException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    public Connection getConnection() {
+        if (unusedConnections.isEmpty()){
+            return null;
+        } else {
+            Connection con = unusedConnections.remove(0);
+            usedConnections.add(con);
+            System.out.println(con);
+            return con;
+        }
+    }
+
+    public void releaseConnection(Connection connection){
+        if (usedConnections.contains(connection)){
+            usedConnections.remove(connection);
+            unusedConnections.add(0, connection);
+        }
     }
 }
