@@ -1,4 +1,4 @@
-# USE THIS FOR REMEMBERING THINGS TO DO, SUGESTIONS, ETC.
+# USE THIS FOR REMEMBERING THINGS TO DO, SUGGESTIONS, ETC.
 - [ ] Consider using one loading for filter and showing all songs in list 
 - [ ] Connection Pooling
 - [ ] Exception handling

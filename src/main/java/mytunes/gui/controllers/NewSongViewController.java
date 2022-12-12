@@ -45,10 +45,10 @@ public class NewSongViewController {
      * Called when a user clicks "More" button while creating a new song
      * Enables a user to create and add another genre to the combobox
      *
-     * @param actionEvent The action event that triggered this method
+     * @param ignoredActionEvent The action event that triggered this method
      * @throws IOException Thrown when the fxml file is not found
      */
-    public void btnGenreMoreAction(ActionEvent actionEvent) throws IOException {
+    public void btnGenreMoreAction(ActionEvent ignoredActionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MyTunes.class.getResource("views/new-genre-view.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader.load());
@@ -66,9 +66,9 @@ public class NewSongViewController {
      * Called when a user clicks the "Choose" button while creating a new song
      * Opens a window which enables user to choose a file path from their documents
      *
-     * @param actionEvent The action event that triggered this method
+     * @param ignoredActionEvent The action event that triggered this method
      */
-    public void btnFileChooseAction(ActionEvent actionEvent) {
+    public void btnFileChooseAction(ActionEvent ignoredActionEvent) {
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
 

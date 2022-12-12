@@ -4,8 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
-import mytunes.be.Genre;
-import mytunes.be.Playlist;
 import mytunes.gui.models.Model;
 
 public class NewGenreViewController {
