@@ -1,9 +1,12 @@
 package mytunes.be;
 
+import static mytunes.be.tools.BETools.convertSecondsIntoString;
+
 public class Song {
-    private int id, duration;
-    private String title, path, durationAsAString;
-    private Artist artist;
+    private int id;
+    private final int duration;
+    private final String title, path;
+    private final Artist artist;
     private Genre genre;
     private int indexInPlaylist;
 
@@ -53,30 +56,8 @@ public class Song {
                 ", Duration: " + duration + ", Path: " + path;
     }
 
-    private void convertSecondsIntoString(int duration){
-        durationAsAString = "";
-        int seconds = duration % 60;
-        int minutes = (duration / 60) % 60;
-        int hours = (duration / 60) / 60;
-
-        if (hours > 0){
-            if (hours < 10)
-                durationAsAString += "0";
-            durationAsAString += hours + ":";
-        }
-
-        if (minutes < 10)
-            durationAsAString += "0";
-        durationAsAString += minutes + ":";
-
-        if (seconds < 10)
-            durationAsAString += "0";
-        durationAsAString += seconds;
-    }
-
     public String getDurationAsAString(){  // used by PropertyValueFactory
-        convertSecondsIntoString(this.duration);
-        return durationAsAString;
+        return convertSecondsIntoString(this.duration);
     }
 
     public int getIndexInPlaylist() {

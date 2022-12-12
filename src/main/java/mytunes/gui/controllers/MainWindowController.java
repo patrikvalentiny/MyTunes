@@ -234,10 +234,10 @@ public class MainWindowController {
     /**
      * Called when the user clicks the "new" button under playlist section
      * Opens a new window for creating new playlist
-     * @param actionEvent The action event that triggered this method
+     * @param ignoredActionEvent The action event that triggered this method
      * @throws IOException thrown when the fxml file is not found
      */
-    public void playlistNewButtonAction(ActionEvent actionEvent) throws IOException {
+    public void playlistNewButtonAction(ActionEvent ignoredActionEvent) throws IOException {
         Object[] objects = openNewWindow("Add Playlist", "views/new-playlist-view.fxml", "images/playlist.png");
         FXMLLoader fxmlLoader = (FXMLLoader) objects[0];
         Window window = (Window) objects[1];
@@ -249,10 +249,10 @@ public class MainWindowController {
     /**
      * Called when the user clicks the "edit" button under playlist section
      * Opens a new window for editing the playlist's name
-     * @param actionEvent The action event that triggered this method
+     * @param ignoredActionEvent The action event that triggered this method
      * @throws IOException Thrown when the fxml file is not found
      */
-    public void playlistEditButtonAction(ActionEvent actionEvent) throws IOException {
+    public void playlistEditButtonAction(ActionEvent ignoredActionEvent) throws IOException {
         Playlist playlist = playlistsTableView.getSelectionModel().getSelectedItem();
         if (playlist == null)
             new Alert(Alert.AlertType.ERROR, "Please select a playlist to edit").showAndWait();
@@ -268,7 +268,7 @@ public class MainWindowController {
         }
     }
 
-    public void filterOnKeyTyped(KeyEvent keyEvent) {
+    public void filterOnKeyTyped(KeyEvent ignoredKeyEvent) {
         allSongsTableView.getItems().setAll(model.search(filterTextField.getText()));
         allSongsTableView.refresh();
     }
@@ -276,10 +276,10 @@ public class MainWindowController {
     /**
      * Called when the user clicks the "new" button under all songs section
      * It opens new window for adding new song
-     * @param actionEvent The action event that triggered this method
+     * @param ignoredActionEvent The action event that triggered this method
      * @throws IOException thrown when the fxml file is not found
      */
-    public void songNewButtonAction(ActionEvent actionEvent) throws IOException {
+    public void songNewButtonAction(ActionEvent ignoredActionEvent) throws IOException {
         Object[] objects = openNewWindow("Add song", "views/new-song-view.fxml", "images/record.png");
         FXMLLoader fxmlLoader = (FXMLLoader) objects[0];
         Window window = (Window) objects[1];
@@ -292,10 +292,10 @@ public class MainWindowController {
     /**
      * Called when the user clicks the "edit" button under song section
      * Opens a new window for editing the song data
-     * @param actionEvent The action event that triggered this method
+     * @param ignoredActionEvent The action event that triggered this method
      * @throws IOException Thrown when the fxml file is not found
      */
-    public void songEditButtonAction(ActionEvent actionEvent) throws IOException {
+    public void songEditButtonAction(ActionEvent ignoredActionEvent) throws IOException {
         Song selectedSong = allSongsTableView.getSelectionModel().getSelectedItem();
         if (selectedSong == null) {
             new Alert(Alert.AlertType.ERROR, "Please select a song to edit").showAndWait();
@@ -348,7 +348,7 @@ public class MainWindowController {
         }
     }
 
-    public void playlistTableViewOnMouseUp(MouseEvent mouseEvent) {
+    public void playlistTableViewOnMouseUp(MouseEvent ignoredMouseEvent) {
         showSongsInPlaylist();
     }
 
@@ -400,12 +400,12 @@ public class MainWindowController {
         });
     }
 
-    public void songTimeSliderMouseUp(MouseEvent mouseEvent) {
+    public void songTimeSliderMouseUp(MouseEvent ignoredMouseEvent) {
         mediaPlayer.seek(Duration.seconds(songTimeSlider.getValue()));
         isUserChangingSongTime = false;
     }
 
-    public void songTimeSliderMouseDown(MouseEvent mouseEvent) {
+    public void songTimeSliderMouseDown(MouseEvent ignoredMouseEvent) {
         isUserChangingSongTime = true;
         lblSongTimeSinceStart.setText(humanReadableTime(songTimeSlider.getValue()));
     }

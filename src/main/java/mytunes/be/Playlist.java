@@ -1,14 +1,10 @@
 package mytunes.be;
 
-import mytunes.dal.dao.PlaylistDAO;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import static mytunes.be.tools.BETools.convertSecondsIntoString;
 
 public class Playlist {
     private int id, totalLength;
-    private String name, totalLengthAsAString;
+    private String name;
 
     public Playlist(String name){
         this.name = name;
@@ -47,29 +43,7 @@ public class Playlist {
                 ", totalLength = " + totalLength;
     }
 
-    private void convertSecondsIntoString(int duration){
-        totalLengthAsAString = "";
-        int seconds = duration % 60;
-        int minutes = (duration / 60) % 60;
-        int hours = (duration / 60) / 60;
-
-        if (hours > 0){
-            if (hours < 10)
-                totalLengthAsAString += "0";
-            totalLengthAsAString += hours + ":";
-        }
-
-        if (minutes < 10)
-            totalLengthAsAString += "0";
-        totalLengthAsAString += minutes + ":";
-
-        if (seconds < 10)
-            totalLengthAsAString += "0";
-        totalLengthAsAString += seconds;
-    }
-
     public String getTotalLengthAsAString(){  // used by PropertyValueFactory
-        convertSecondsIntoString(this.totalLength);
-        return totalLengthAsAString;
+        return convertSecondsIntoString(this.totalLength);
     }
 }
