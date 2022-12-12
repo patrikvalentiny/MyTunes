@@ -1,7 +1,5 @@
 package mytunes.be;
 
-import java.util.List;
-
 public class Artist {
     private int id;
     private String name;
