@@ -6,14 +6,17 @@ import mytunes.be.Song;
 import mytunes.dal.dao.GenreDAO;
 import mytunes.dal.dao.PlaylistDAO;
 import mytunes.dal.dao.SongDAO;
+import mytunes.dal.interfaces.IGenreDataAccess;
+import mytunes.dal.interfaces.IPlaylistDataAccess;
+import mytunes.dal.interfaces.ISongDataAccess;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LogicManager implements LogicInterface{
-    private final SongDAO songDAO = new SongDAO();
-    private final GenreDAO genreDAO = new GenreDAO();
-    private final PlaylistDAO playlistDAO = new PlaylistDAO();
+    private final ISongDataAccess songDAO = new SongDAO();
+    private final IGenreDataAccess genreDAO = new GenreDAO();
+    private final IPlaylistDataAccess playlistDAO = new PlaylistDAO();
     private List<Song> allSongs;
 
     public void createSong(Song song) {

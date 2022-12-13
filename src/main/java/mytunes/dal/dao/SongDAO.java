@@ -3,13 +3,15 @@ package mytunes.dal.dao;
 import mytunes.be.Artist;
 import mytunes.be.Genre;
 import mytunes.be.Song;
+import mytunes.dal.interfaces.ISongDataAccess;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import static mytunes.dal.DAOTools.*;
 
-public class SongDAO {
+public class SongDAO implements ISongDataAccess {
 
     /**
      * @return a list of all available songs from the database
@@ -46,10 +48,6 @@ public class SongDAO {
         }
     }
 
-    /**
-     * Adds a song to the database, if a song with this name already exists, an alert window is called
-     * @param song The song to add
-     */
     public void addSong(Song song){
         String sql = "INSERT INTO ALL_SONGS (title, artist, genre, filepath, duration) " +
                         "VALUES ('" + validateStringForSQL(song.getTitle()) + "', '"

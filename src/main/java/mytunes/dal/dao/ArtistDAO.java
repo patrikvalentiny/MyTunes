@@ -1,13 +1,14 @@
 package mytunes.dal.dao;
 
 import mytunes.be.Artist;
+import mytunes.dal.interfaces.IArtistDataAccess;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static mytunes.dal.DAOTools.*;
 
-public class ArtistDAO {
+public class ArtistDAO implements IArtistDataAccess {
 
     public Artist getArtist(int id) {
         String sql = "SELECT * FROM ARTISTS WHERE id = " + id;

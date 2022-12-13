@@ -1,6 +1,7 @@
 package mytunes.dal.dao;
 
 import mytunes.be.Genre;
+import mytunes.dal.interfaces.IGenreDataAccess;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +10,7 @@ import java.util.List;
 
 import static mytunes.dal.DAOTools.*;
 
-public class GenreDAO {
+public class GenreDAO implements IGenreDataAccess {
     public List<Genre> getAllGenres() {
         ArrayList<Genre> allGenres = new ArrayList<>();
         String sql = "SELECT * FROM GENRES";

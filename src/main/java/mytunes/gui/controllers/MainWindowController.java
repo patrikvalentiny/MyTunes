@@ -29,13 +29,9 @@ import java.util.Optional;
 
 public class MainWindowController {
     @FXML
-    private Label currentArtistLabel;
-    @FXML
-    private Label currentSongsLabel;
+    private Label currentArtistLabel, currentSongsLabel, lblSongTimeUntilEnd, lblSongTimeSinceStart;
     @FXML
     private ListView<Song> songsInPlaylistListView;
-    @FXML
-    private Label lblSongTimeUntilEnd, lblSongTimeSinceStart;
     @FXML
     private Slider volumeControlSlider, songTimeSlider;
     @FXML
