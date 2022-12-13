@@ -474,14 +474,11 @@ public class MainWindowController {
     }
 
     public void allSongsTableViewMouseClicked(MouseEvent mouseEvent) {
-        // TODO: Sometimes playing songs takes too long for no apparent reason
+        // TODO: Sometimes playing songs takes too long for no apparent reason - optional: fix this
         if (mouseEvent.getClickCount() == 2 && (queue.get(currentSongIndex) != null)) {
-            long before = System.currentTimeMillis();
             queue = model.getAllSongs();
             currentSongIndex = allSongsTableView.getSelectionModel().getSelectedIndex();
             playSong(queue.get(currentSongIndex));
-            long after = System.currentTimeMillis();
-            System.out.println("Time: " + (after - before));
         }
     }
 
@@ -490,13 +487,18 @@ public class MainWindowController {
             mediaPlayer.stop();
             isPlaying = false;
         }
-        mediaPlayer = new MediaPlayer(new Media(Paths.get(song.getPath()).toUri().toString()));
-        currentSongsLabel.setText(song.getTitle());
-        currentArtistLabel.setText(song.getArtist().getName());
-        lblSongTimeUntilEnd.setText(humanReadableTime(mediaPlayer.getTotalDuration().toSeconds()));
-        setMediaPlayerBehavior();
-        playPauseMusic();
-
+        try {
+            mediaPlayer = new MediaPlayer(new Media(Paths.get(song.getPath()).toUri().toString()));
+            currentSongsLabel.setText(song.getTitle());
+            currentArtistLabel.setText(song.getArtist().getName());
+            lblSongTimeUntilEnd.setText(humanReadableTime(mediaPlayer.getTotalDuration().toSeconds()));
+            setMediaPlayerBehavior();
+            playPauseMusic();
+        } catch (Exception e) {
+            isPlaying = true;
+            playPauseMusic();
+            new Alert(Alert.AlertType.ERROR, "Can't play this song").showAndWait();
+        }
     }
     private void playPauseMusic() {
         if (isPlaying) {
