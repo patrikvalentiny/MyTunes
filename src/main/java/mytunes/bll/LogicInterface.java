@@ -34,12 +34,13 @@ public interface LogicInterface {
     public List<Song> getAllSongs();
 
     /**
-     *
+     * Calls the getAllSongs() method in songDAO and saves the songs in
+     * a list of allSongs
      */
     public void loadSongsToMemory();
 
     /**
-     *
+     * Clears the list of allSongs
      */
     public void removeSongsFromMemory();
 
@@ -80,16 +81,50 @@ public interface LogicInterface {
 
 
     //working with genres
+
+    /**
+     * calls the createGenre() method in genreDAO
+     * @param genre the genre to be created
+     */
     public void createGenre(Genre genre);
+
+    /**
+     * Calls a getAllGenres() method in genreDAO
+     * @return a list of all genres in the database
+     */
     public List<Genre> getAllGenres();
 
 
     //working with songs in playlists
+
+    /**
+     * Calls the addSongToPlaylist() method in playlistDAO
+     * @param song the song to be added
+     * @param playlist the playlist, where a song is to be added
+     */
     public void addSongToPlaylist(Song song, Playlist playlist);
 
+    /**
+     * Calls the getAllSongsInPlaylist() method in playlistDAO
+     * @param playlist the playlist, from which songs need to be retrieved
+     * @return a list of all songs in the selected playlist
+     */
     public List<Song> getSongsInPlaylist(Playlist playlist);
 
+    /**
+     * Calls the moveSongInPlaylist() method in playlistDAO
+     * @param song the song to be moved
+     * @param playlist the playlist containing the song
+     * @param moveUp indicates, if the song is to be moved up or down
+     * @param songIndex the current index of the song within the playlist
+     */
     public void moveSongInPlaylist(Song song, Playlist playlist, Boolean moveUp, int songIndex);
 
+    /**
+     * Calls the deleteSongInPlaylist() method in playlistDAO
+     * @param song the song to be deleted
+     * @param playlist the playlist containing the song
+     * @param songIndex the current index of the song within the playlist
+     */
     public void deleteSongInPlaylist(Song song, Playlist playlist, int songIndex);
 }
