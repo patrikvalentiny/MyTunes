@@ -432,9 +432,11 @@ public class MainWindowController {
                 new Alert(Alert.AlertType.ERROR, "Can't move this song up").showAndWait();
             else{
                 int index = songsInPlaylistListView.getSelectionModel().getSelectedIndex();
-                model.moveSongInPlaylist(song, playlist, true, index);
-                songsInPlaylistListView.setItems(model.getSongsInPlaylist(playlist));
-                songsInPlaylistListView.getSelectionModel().select(index-1);
+                if (songsInPlaylistListView.getSelectionModel().getSelectedItem().getId() != songsInPlaylistListView.getItems().get(index-1).getId()){
+                    model.moveSongInPlaylist(song, playlist, true, index);
+                    songsInPlaylistListView.setItems(model.getSongsInPlaylist(playlist));
+                }
+               songsInPlaylistListView.getSelectionModel().select(index-1);
             }
         }
     }
@@ -461,8 +463,10 @@ public class MainWindowController {
                 new Alert(Alert.AlertType.ERROR, "Can't move this song down").showAndWait();
             else{
                 int index = songsInPlaylistListView.getSelectionModel().getSelectedIndex();
-                model.moveSongInPlaylist(song, playlist, false, index);
-                songsInPlaylistListView.setItems(model.getSongsInPlaylist(playlist));
+                if (songsInPlaylistListView.getSelectionModel().getSelectedItem().getId() != songsInPlaylistListView.getItems().get(index+1).getId()){
+                    model.moveSongInPlaylist(song, playlist, false, index);
+                    songsInPlaylistListView.setItems(model.getSongsInPlaylist(playlist));
+                }
                 songsInPlaylistListView.getSelectionModel().select(index+1);
             }
         }

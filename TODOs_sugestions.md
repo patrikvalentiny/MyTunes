@@ -6,4 +6,6 @@
 - [X] Change functionality when song ends
 - [ ] More sensitive volume controls
 - [ ] Dependency inversion principle - implement interfaces
+- [x] Fix the indexing in playlist for a song that is in multiple times
+- [ ] Keep focus on a selected playlist
 - ![TODO](https://preview.redd.it/mnr1owzlxt4a1.jpg?width=960&crop=smart&auto=webp&s=0dc59fabb8790a74cf3939e6f803bca1c56be64e)
