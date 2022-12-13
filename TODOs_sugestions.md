@@ -3,4 +3,6 @@
 - [ ] Connection Pooling
 - [ ] Exception handling
 - [X] Change functionality when song ends
+- [ ] Change song properties by double-clicking the value in the column
+- [ ] More sensitive volume controls
 - [ ] Dependency inversion principle - implement interfaces

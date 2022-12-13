@@ -10,7 +10,7 @@ import mytunes.dal.dao.SongDAO;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogicManager {
+public class LogicManager implements LogicInterface{
     private final SongDAO songDAO = new SongDAO();
     private final GenreDAO genreDAO = new GenreDAO();
     private final PlaylistDAO playlistDAO = new PlaylistDAO();

@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import mytunes.be.Genre;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
+import mytunes.bll.LogicInterface;
 import mytunes.bll.LogicManager;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class Model {
     private final ObservableList<Song> allSongs, songsInPlaylist;
     private Song songToEdit;
     private Playlist playlistToEdit;
-    private final LogicManager bll = new LogicManager();
+    private final LogicInterface bll = new LogicManager();
 
     public Model(){
         genres = FXCollections.observableArrayList();
