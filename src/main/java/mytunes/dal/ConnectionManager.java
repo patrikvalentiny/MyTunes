@@ -80,17 +80,10 @@ public class ConnectionManager {
     }
 
     public void closeAllConnections(){
+        usedConnections.forEach(this::releaseConnection);
         for (Connection con : unusedConnections){
             try {
                 con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        for (Connection con : usedConnections){
-            try {
-                con.close();
-                System.out.println(con.isClosed());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
