@@ -115,8 +115,6 @@ public class MainWindowController {
         playPauseMusic();
     }
 
-
-
     public void forwardMouseUp(MouseEvent mouseEvent) {
         resetOpacity(mouseEvent);
         forwardMusic();
@@ -312,6 +310,7 @@ public class MainWindowController {
             window.setOnHiding(event -> showAllSongs());
             NewSongViewController newSongViewController = fxmlLoader.getController();
             newSongViewController.setModel(model);
+            newSongViewController.setComboBoxItems();
             newSongViewController.setIsEditing();
         }
     }
@@ -432,8 +431,10 @@ public class MainWindowController {
             if (songsInPlaylistListView.getSelectionModel().getSelectedIndex() == 0)
                 new Alert(Alert.AlertType.ERROR, "Can't move this song up").showAndWait();
             else{
-                model.moveSongInPlaylist(song, playlist, true, songsInPlaylistListView.getSelectionModel().getSelectedIndex());
+                int index = songsInPlaylistListView.getSelectionModel().getSelectedIndex();
+                model.moveSongInPlaylist(song, playlist, true, index);
                 songsInPlaylistListView.setItems(model.getSongsInPlaylist(playlist));
+                songsInPlaylistListView.getSelectionModel().select(index-1);
             }
         }
     }
@@ -459,8 +460,10 @@ public class MainWindowController {
             if (songsInPlaylistListView.getSelectionModel().getSelectedIndex() == songsInPlaylistListView.getItems().size()-1)
                 new Alert(Alert.AlertType.ERROR, "Can't move this song down").showAndWait();
             else{
-                model.moveSongInPlaylist(song, playlist, false, songsInPlaylistListView.getSelectionModel().getSelectedIndex());
+                int index = songsInPlaylistListView.getSelectionModel().getSelectedIndex();
+                model.moveSongInPlaylist(song, playlist, false, index);
                 songsInPlaylistListView.setItems(model.getSongsInPlaylist(playlist));
+                songsInPlaylistListView.getSelectionModel().select(index+1);
             }
         }
     }

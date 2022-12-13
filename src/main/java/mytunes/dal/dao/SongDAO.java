@@ -1,5 +1,6 @@
 package mytunes.dal.dao;
 
+import javafx.scene.control.Alert;
 import mytunes.be.Artist;
 import mytunes.be.Genre;
 import mytunes.be.Song;
@@ -60,9 +61,8 @@ public class SongDAO implements ISongDataAccess {
         } catch (SQLException e) {
             if (e.getMessage().contains("C_unique_title"))
             {
-                System.out.println("Song already exists");
-                //throw new IOException("Song already exists");
                 //TODO open an Alert
+                new Alert(Alert.AlertType.ERROR, "Song already exists").showAndWait();
             } else
                 throw new RuntimeException(e);
         }
