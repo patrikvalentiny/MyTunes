@@ -1,7 +1,6 @@
 package mytunes.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,9 +13,6 @@ import java.util.Properties;
 
 /**
  * Class responsible for managing the connection to the database.
- * Implementation in this class is BAD practice from my understanding but performs well
- * Closing connection should be done sooner from my understanding not on the application termination
- * This will be fixed in the future versions of the course - considering using C3P0 connection pooling
  *
  * @author Patrik Valentiny
  */
@@ -43,22 +39,13 @@ public class ConnectionManager {
         ds.setUser(props.getProperty("USER"));
         ds.setPassword(props.getProperty("PASSWORD"));
         ds.setTrustServerCertificate(true);
-        generateConnections();
     }
 
-
-    private void generateConnections(){
-        for (int i = 0; i < 10; i++) {
-            try {
-                unusedConnections.add(ds.getConnection());
-            } catch (SQLServerException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
     public Connection getConnection() throws SQLException {
         if (unusedConnections.isEmpty()){
-            return ds.getConnection();
+            Connection con = ds.getConnection();
+            usedConnections.add(con);
+            return con;
         } else {
             Connection con = unusedConnections.remove(0);
             if (con.isValid(0)){

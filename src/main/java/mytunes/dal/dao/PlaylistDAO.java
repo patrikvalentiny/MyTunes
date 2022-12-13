@@ -157,19 +157,12 @@ public class PlaylistDAO {
      * @param songIndex the current index of the song
      */
     public void deleteSongInPlaylist(int songID, int playlistID, int songIndex){
-
-        try{
+        try {
             String sql = "DELETE FROM SONG_PLAYLIST_LINK WHERE playlistID = " + playlistID +
-                    " AND songID = " + songID + " AND songIndex = " + songIndex;
+                    " AND songID = " + songID + " AND songIndex = " + songIndex+ " ; " +
+                    "UPDATE SONG_PLAYLIST_LINK SET songIndex = songIndex - 1 WHERE playlistID = " + playlistID +
+                    " AND songIndex > " + songIndex;
             SQLQuery(sql);
-
-            List<Song> allSongsInPlaylist = getAllSongsInPlaylist(playlistID);
-            for (int i = songIndex; i < allSongsInPlaylist.size() + 1; i++){
-                int oldSongIndex = i+1;
-                // TODO: maybe change to use sql while loop
-                sql = "UPDATE SONG_PLAYLIST_LINK SET songIndex = " + i + " WHERE songIndex = " + oldSongIndex + " AND playlistID = " + playlistID;
-                SQLQuery(sql);
-            }
             calculateTotalLength(playlistID);
         } catch (SQLException ex){
             ex.printStackTrace();
