@@ -21,6 +21,7 @@ import mytunes.gui.models.Model;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 public class NewSongViewController {
     @FXML
@@ -71,12 +72,21 @@ public class NewSongViewController {
     public void btnFileChooseAction(ActionEvent ignoredActionEvent) {
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
-
+        File file;
         fileChooser.setTitle("Choose a song file");
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Music"));
-        // TODO - Open path that's in the textfield
-        fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("MP3 files", "*.mp3"));
-        File file = fileChooser.showOpenDialog(stage);
+        try {
+            if (txtFieldFile.getText() != null) {
+                File previousFile = new File(Paths.get(txtFieldFile.getText()).toUri());
+                fileChooser.setInitialDirectory(new File(previousFile.getParentFile().getAbsolutePath()));
+                fileChooser.setInitialFileName(previousFile.getName());
+            }
+            fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("MP3 files", "*.mp3"));
+            file = fileChooser.showOpenDialog(stage);
+        } catch (Exception e){
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Music"));
+            fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("MP3 files", "*.mp3"));
+            file = fileChooser.showOpenDialog(stage);
+        }
         if (file != null){
             txtFieldFile.setText(file.getAbsolutePath());
 
