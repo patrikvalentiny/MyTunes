@@ -56,8 +56,6 @@ public class MainWindowController {
 
     private double volume = 0.05;
     private int currentSongIndex;
-    // TODO: make this in model
-    private List<Song> queue = model.getAllSongs();
     private Playlist selectedPlaylist;
     private int playlistIndex = -1;
 
@@ -71,7 +69,7 @@ public class MainWindowController {
         playlistsTableView.setPlaceholder(new Label("No playlists found"));
         songsInPlaylistListView.setPlaceholder(new Label("No songs in playlist"));
 
-        playSong(queue.get(0));
+        playSong(model.getQueue().get(0));
         playPauseMusic();
         volumeControlSlider.setValue(volume * 100);
     }
@@ -129,6 +127,7 @@ public class MainWindowController {
     }
 
     private void forwardMusic() {
+        List<Song> queue = model.getQueue();
         currentSongIndex = currentSongIndex == queue.size() - 1 ? 0 : currentSongIndex + 1;
         playSong(queue.get(currentSongIndex));
     }
@@ -146,6 +145,7 @@ public class MainWindowController {
         if (mediaPlayer.getCurrentTime().toSeconds() > 2)
             mediaPlayer.seek(Duration.ZERO);
         else {
+            List<Song> queue = model.getQueue();
             currentSongIndex = currentSongIndex == 0 ? queue.size() - 1 : currentSongIndex - 1;
             playSong(queue.get(currentSongIndex));
         }
@@ -503,10 +503,11 @@ public class MainWindowController {
 
     public void allSongsTableViewMouseClicked(MouseEvent mouseEvent) {
         // TODO: Sometimes playing songs takes too long for no apparent reason - optional: fix this
+        List<Song> queue = model.getQueue();
         if (mouseEvent.getClickCount() == 2 && (queue.get(currentSongIndex) != null)) {
-            queue = model.getAllSongs();
+            model.setQueue(model.getAllSongs());
             currentSongIndex = allSongsTableView.getSelectionModel().getSelectedIndex();
-            playSong(queue.get(currentSongIndex));
+            playSong(model.getQueue().get(currentSongIndex));
         }
     }
 
@@ -523,9 +524,14 @@ public class MainWindowController {
             setMediaPlayerBehavior();
             playPauseMusic();
         } catch (Exception e) {
+            if (e.toString().contains("The system cannot find the path specified")) {
+                new Alert(Alert.AlertType.ERROR, "The file \"" + song.getTitle() + "\" could not be found").showAndWait();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "An error occurred while trying to play " + song.getTitle()).showAndWait();
+            }
+            // making sure the playing is stopped
             isPlaying = true;
             playPauseMusic();
-            new Alert(Alert.AlertType.ERROR, "Can't play this song").showAndWait();
         }
     }
     private void playPauseMusic() {
@@ -544,8 +550,8 @@ public class MainWindowController {
         if (mouseEvent.getClickCount() == 2) {
             Playlist playlist = playlistsTableView.getSelectionModel().getSelectedItem();
             currentSongIndex = songsInPlaylistListView.getSelectionModel().getSelectedIndex();
-            queue = model.getSongsInPlaylist(playlist);
-            playSong(queue.get(currentSongIndex));
+            model.setQueue(model.getSongsInPlaylist(playlist));
+            playSong(model.getQueue().get(currentSongIndex));
         }
     }
 }

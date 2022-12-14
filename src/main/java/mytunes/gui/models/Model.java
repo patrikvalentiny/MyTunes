@@ -18,11 +18,22 @@ public class Model {
     private Playlist playlistToEdit;
     private final LogicInterface bll = new LogicManager();
 
+    private List<Song> queue;
+
     public Model(){
         genres = FXCollections.observableArrayList();
         playlists = FXCollections.observableArrayList();
         allSongs = FXCollections.observableArrayList();
         songsInPlaylist = FXCollections.observableArrayList();
+        queue = getAllSongs();
+    }
+
+    public List<Song> getQueue() {
+        return queue;
+    }
+
+    public void setQueue(List<Song> queue) {
+        this.queue = queue;
     }
 
     public Song getSongToEdit() {
