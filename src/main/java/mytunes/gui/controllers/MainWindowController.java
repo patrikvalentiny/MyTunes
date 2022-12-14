@@ -30,13 +30,9 @@ import java.util.Optional;
 
 public class MainWindowController {
     @FXML
-    private Label currentArtistLabel;
-    @FXML
-    private Label currentSongsLabel;
+    private Label currentArtistLabel, currentSongsLabel, lblSongTimeUntilEnd, lblSongTimeSinceStart;
     @FXML
     private ListView<Song> songsInPlaylistListView;
-    @FXML
-    private Label lblSongTimeUntilEnd, lblSongTimeSinceStart;
     @FXML
     private Slider volumeControlSlider, songTimeSlider;
     @FXML
@@ -119,8 +115,6 @@ public class MainWindowController {
         resetOpacity(mouseEvent);
         playPauseMusic();
     }
-
-
 
     public void forwardMouseUp(MouseEvent mouseEvent) {
         resetOpacity(mouseEvent);
@@ -317,6 +311,7 @@ public class MainWindowController {
             window.setOnHiding(event -> showAllSongs());
             NewSongViewController newSongViewController = fxmlLoader.getController();
             newSongViewController.setModel(model);
+            newSongViewController.setComboBoxItems();
             newSongViewController.setIsEditing();
         }
     }
@@ -451,8 +446,10 @@ public class MainWindowController {
             if (songsInPlaylistListView.getSelectionModel().getSelectedIndex() == 0)
                 new Alert(Alert.AlertType.ERROR, "Can't move this song up").showAndWait();
             else{
-                model.moveSongInPlaylist(song, playlist, true, songsInPlaylistListView.getSelectionModel().getSelectedIndex());
+                int index = songsInPlaylistListView.getSelectionModel().getSelectedIndex();
+                model.moveSongInPlaylist(song, playlist, true, index);
                 songsInPlaylistListView.setItems(model.getSongsInPlaylist(playlist));
+                songsInPlaylistListView.getSelectionModel().select(index-1);
             }
         }
     }
@@ -478,8 +475,10 @@ public class MainWindowController {
             if (songsInPlaylistListView.getSelectionModel().getSelectedIndex() == songsInPlaylistListView.getItems().size()-1)
                 new Alert(Alert.AlertType.ERROR, "Can't move this song down").showAndWait();
             else{
-                model.moveSongInPlaylist(song, playlist, false, songsInPlaylistListView.getSelectionModel().getSelectedIndex());
+                int index = songsInPlaylistListView.getSelectionModel().getSelectedIndex();
+                model.moveSongInPlaylist(song, playlist, false, index);
                 songsInPlaylistListView.setItems(model.getSongsInPlaylist(playlist));
+                songsInPlaylistListView.getSelectionModel().select(index+1);
             }
         }
     }
@@ -489,9 +488,10 @@ public class MainWindowController {
     }
 
     public void allSongsTableViewMouseClicked(MouseEvent mouseEvent) {
-        queue = model.getAllSongs();
-        currentSongIndex = allSongsTableView.getSelectionModel().getSelectedIndex();
+        // TODO: Sometimes playing songs takes too long for no apparent reason - optional: fix this
         if (mouseEvent.getClickCount() == 2 && (queue.get(currentSongIndex) != null)) {
+            queue = model.getAllSongs();
+            currentSongIndex = allSongsTableView.getSelectionModel().getSelectedIndex();
             playSong(queue.get(currentSongIndex));
         }
     }
@@ -501,13 +501,18 @@ public class MainWindowController {
             mediaPlayer.stop();
             isPlaying = false;
         }
-        mediaPlayer = new MediaPlayer(new Media(Paths.get(song.getPath()).toUri().toString()));
-        currentSongsLabel.setText(song.getTitle());
-        currentArtistLabel.setText(song.getArtist().getName());
-        lblSongTimeUntilEnd.setText(humanReadableTime(mediaPlayer.getTotalDuration().toSeconds()));
-        setMediaPlayerBehavior();
-        playPauseMusic();
-
+        try {
+            mediaPlayer = new MediaPlayer(new Media(Paths.get(song.getPath()).toUri().toString()));
+            currentSongsLabel.setText(song.getTitle());
+            currentArtistLabel.setText(song.getArtist().getName());
+            lblSongTimeUntilEnd.setText(humanReadableTime(mediaPlayer.getTotalDuration().toSeconds()));
+            setMediaPlayerBehavior();
+            playPauseMusic();
+        } catch (Exception e) {
+            isPlaying = true;
+            playPauseMusic();
+            new Alert(Alert.AlertType.ERROR, "Can't play this song").showAndWait();
+        }
     }
     private void playPauseMusic() {
         if (isPlaying) {
