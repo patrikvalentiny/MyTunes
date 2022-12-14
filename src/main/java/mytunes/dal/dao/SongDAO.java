@@ -61,7 +61,6 @@ public class SongDAO implements ISongDataAccess {
         } catch (SQLException e) {
             if (e.getMessage().contains("C_unique_title"))
             {
-                //TODO open an Alert
                 new Alert(Alert.AlertType.ERROR, "Song already exists").showAndWait();
             } else
                 throw new RuntimeException(e);
@@ -105,13 +104,13 @@ public class SongDAO implements ISongDataAccess {
                 playlistIDs.add(rs.getInt("playlistID"));
             }
 
-            for (int i = 0; i < playlistIDs.size(); i++){
-                rs = SQLQueryWithRS("SELECT * FROM SONG_PLAYLIST_LINK WHERE playlistID = " + playlistIDs.get(i));
+            for (Integer playlistID : playlistIDs) {
+                rs = SQLQueryWithRS("SELECT * FROM SONG_PLAYLIST_LINK WHERE playlistID = " + playlistID);
                 int j = 1;
-                while (rs.next()){
+                while (rs.next()) {
                     int currentSongIndex = rs.getInt("songIndex");
                     sql = "UPDATE SONG_PLAYLIST_LINK SET songIndex = " + j + " WHERE songIndex = " + currentSongIndex
-                            + " AND playlistID = " + playlistIDs.get(i);
+                            + " AND playlistID = " + playlistID;
                     SQLQuery(sql);
                     j++;
                 }
