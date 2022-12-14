@@ -18,10 +18,10 @@ import java.util.Properties;
  */
 public class ConnectionManager {
     private static final String CONFIG_FILE_NAME = "config.cfg";
-    private final SQLServerDataSource ds = new SQLServerDataSource();
+    private static final SQLServerDataSource ds = new SQLServerDataSource();
 
-    private List<Connection> unusedConnections = new ArrayList<>();
-    private List<Connection> usedConnections = new ArrayList<>();
+    private static final List<Connection> unusedConnections = new ArrayList<>();
+    private static final List<Connection> usedConnections = new ArrayList<>();
 
     public ConnectionManager()
     {

@@ -361,11 +361,12 @@ public class MainWindowController {
     }
 
     public void playlistTableViewOnMouseUp(MouseEvent ignoredMouseEvent) {
-        showSongsInPlaylist();
         if (playlistsTableView.getSelectionModel().getSelectedItem() != null){
             selectedPlaylist = playlistsTableView.getSelectionModel().getSelectedItem();
             playlistIndex = playlistsTableView.getSelectionModel().getSelectedIndex();
+            showSongsInPlaylist();
         }
+
     }
 
     private String humanReadableTime(double seconds) {
@@ -376,6 +377,7 @@ public class MainWindowController {
     }
 
     private void showSongsInPlaylist(){
+        songsInPlaylistListView.setItems(model.getSongsInPlaylist(selectedPlaylist));
         songsInPlaylistListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Song song, boolean empty) {
@@ -387,9 +389,6 @@ public class MainWindowController {
                 }
             }
         });
-        if (selectedPlaylist != null) {
-            songsInPlaylistListView.setItems(model.getSongsInPlaylist(selectedPlaylist));
-        }
     }
 
 
