@@ -110,7 +110,8 @@ public class SongDAO implements ISongDataAccess {
                 int j = 1;
                 while (rs.next()){
                     int currentSongIndex = rs.getInt("songIndex");
-                    sql = "UPDATE SONG_PLAYLIST_LINK SET songIndex = " + j + " WHERE songIndex = " + currentSongIndex;
+                    sql = "UPDATE SONG_PLAYLIST_LINK SET songIndex = " + j + " WHERE songIndex = " + currentSongIndex
+                            + " AND playlistID = " + playlistIDs.get(i);
                     SQLQuery(sql);
                     j++;
                 }

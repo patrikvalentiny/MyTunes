@@ -227,7 +227,7 @@ public class MainWindowController {
                 model.deleteSong(song);
                 showAllSongs();
                 showSongsInPlaylist();
-                showAllPlaylists();
+                playlistsTableView.refresh();
             } else if (type.equals("playlist")){
                 model.deletePlaylist(selectedPlaylist);
                 selectedPlaylist = null;

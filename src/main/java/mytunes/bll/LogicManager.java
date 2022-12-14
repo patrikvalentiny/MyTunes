@@ -40,6 +40,9 @@ public class LogicManager implements LogicInterface{
     }
 
     public List<Playlist> getAllPlaylists() {
+        for (Playlist p : playlistDAO.getAllPlaylists()){
+            playlistDAO.calculateTotalLength(p.getId());
+        }
         return playlistDAO.getAllPlaylists();
     }
 
