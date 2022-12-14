@@ -56,9 +56,9 @@ public class MainWindowController {
 
     private double volume = 0.05;
     private int currentSongIndex;
+    // TODO: make this in model
     private List<Song> queue = model.getAllSongs();
     private Playlist selectedPlaylist;
-
     private int playlistIndex = -1;
 
     @FXML
@@ -73,6 +73,7 @@ public class MainWindowController {
 
         playSong(queue.get(0));
         playPauseMusic();
+        volumeControlSlider.setValue(volume * 100);
     }
 
     public void setupListeners(){
