@@ -57,7 +57,9 @@ public class MainWindowController {
     private double volume = 0.05;
     private int currentSongIndex;
     private List<Song> queue = model.getAllSongs();
+    private Playlist selectedPlaylist;
 
+    private int playlistIndex = -1;
 
     @FXML
     public void initialize() {
@@ -108,6 +110,7 @@ public class MainWindowController {
         playlistNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         totalLengthColumn.setCellValueFactory(new PropertyValueFactory<>("totalLengthAsAString"));
         playlistsTableView.getItems().setAll(model.getAllPlaylists());
+        playlistsTableView.getSelectionModel().select(playlistIndex);
     }
 
     /**
@@ -194,7 +197,7 @@ public class MainWindowController {
                 }
             }
             case "playlist" -> {
-                if (playlistsTableView.getSelectionModel().getSelectedItem() == null) {
+                if (selectedPlaylist == null) {
                     errorAlert.setHeaderText("No playlist selected");
                     errorAlert.setContentText("Please select a playlist to delete");
                     errorAlert.showAndWait();
@@ -224,14 +227,15 @@ public class MainWindowController {
                 showAllSongs();
                 showSongsInPlaylist();
             } else if (type.equals("playlist")){
-                Playlist playlist = playlistsTableView.getSelectionModel().getSelectedItem();
-                model.deletePlaylist(playlist);
+                model.deletePlaylist(selectedPlaylist);
+                selectedPlaylist = null;
+                playlistIndex = -1;
                 showAllPlaylists();
+                songsInPlaylistListView.getItems().clear();
             } else {
-                Playlist playlist = playlistsTableView.getSelectionModel().getSelectedItem();
                 Song song = songsInPlaylistListView.getSelectionModel().getSelectedItem();
                 int songIndex = songsInPlaylistListView.getSelectionModel().getSelectedIndex() + 1; // database indexes start from 1
-                model.deleteSongInPlaylist(song, playlist, songIndex);
+                model.deleteSongInPlaylist(song, selectedPlaylist, songIndex);
                 showSongsInPlaylist();
                 showAllPlaylists();
             }
@@ -251,6 +255,7 @@ public class MainWindowController {
         window.setOnHiding(event -> showAllPlaylists());
         NewPlaylistViewController newPlaylistViewController = fxmlLoader.getController();
         newPlaylistViewController.setModel(model);
+        playlistIndex = model.getAllPlaylists().size();
     }
 
     /**
@@ -346,11 +351,10 @@ public class MainWindowController {
     public void moveSongToPlaylistMouseUp(MouseEvent mouseEvent) {
         resetOpacity(mouseEvent);
         Song song = allSongsTableView.getSelectionModel().getSelectedItem();
-        Playlist playlist = playlistsTableView.getSelectionModel().getSelectedItem();
-        if (song == null || playlist == null) {
+        if (song == null || selectedPlaylist == null) {
             new Alert(Alert.AlertType.ERROR, "Please select a song and a playlist").showAndWait();
         } else {
-            model.moveSongToPlaylist(song, playlist);
+            model.moveSongToPlaylist(song, selectedPlaylist);
             showSongsInPlaylist();
             showAllPlaylists();
         }
@@ -358,6 +362,10 @@ public class MainWindowController {
 
     public void playlistTableViewOnMouseUp(MouseEvent ignoredMouseEvent) {
         showSongsInPlaylist();
+        if (playlistsTableView.getSelectionModel().getSelectedItem() != null){
+            selectedPlaylist = playlistsTableView.getSelectionModel().getSelectedItem();
+            playlistIndex = playlistsTableView.getSelectionModel().getSelectedIndex();
+        }
     }
 
     private String humanReadableTime(double seconds) {
@@ -379,7 +387,6 @@ public class MainWindowController {
                 }
             }
         });
-        Playlist selectedPlaylist = playlistsTableView.getSelectionModel().getSelectedItem();
         if (selectedPlaylist != null) {
             songsInPlaylistListView.setItems(model.getSongsInPlaylist(selectedPlaylist));
         }
@@ -450,9 +457,11 @@ public class MainWindowController {
                 new Alert(Alert.AlertType.ERROR, "Can't move this song up").showAndWait();
             else{
                 int index = songsInPlaylistListView.getSelectionModel().getSelectedIndex();
-                model.moveSongInPlaylist(song, playlist, true, index);
-                songsInPlaylistListView.setItems(model.getSongsInPlaylist(playlist));
-                songsInPlaylistListView.getSelectionModel().select(index-1);
+                if (songsInPlaylistListView.getSelectionModel().getSelectedItem().getId() != songsInPlaylistListView.getItems().get(index-1).getId()){
+                    model.moveSongInPlaylist(song, playlist, true, index);
+                    songsInPlaylistListView.setItems(model.getSongsInPlaylist(playlist));
+                }
+               songsInPlaylistListView.getSelectionModel().select(index-1);
             }
         }
     }
@@ -479,8 +488,10 @@ public class MainWindowController {
                 new Alert(Alert.AlertType.ERROR, "Can't move this song down").showAndWait();
             else{
                 int index = songsInPlaylistListView.getSelectionModel().getSelectedIndex();
-                model.moveSongInPlaylist(song, playlist, false, index);
-                songsInPlaylistListView.setItems(model.getSongsInPlaylist(playlist));
+                if (songsInPlaylistListView.getSelectionModel().getSelectedItem().getId() != songsInPlaylistListView.getItems().get(index+1).getId()){
+                    model.moveSongInPlaylist(song, playlist, false, index);
+                    songsInPlaylistListView.setItems(model.getSongsInPlaylist(playlist));
+                }
                 songsInPlaylistListView.getSelectionModel().select(index+1);
             }
         }
