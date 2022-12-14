@@ -69,8 +69,8 @@ public class MainWindowController {
         playlistsTableView.setPlaceholder(new Label("No playlists found"));
         songsInPlaylistListView.setPlaceholder(new Label("No songs in playlist"));
 
-        playSong(model.getQueue().get(0));
-        playPauseMusic();
+        //playSong(model.getQueue().get(0));
+        //playPauseMusic();
         volumeControlSlider.setValue(volume * 100);
     }
 
@@ -227,6 +227,7 @@ public class MainWindowController {
                 model.deleteSong(song);
                 showAllSongs();
                 showSongsInPlaylist();
+                showAllPlaylists();
             } else if (type.equals("playlist")){
                 model.deletePlaylist(selectedPlaylist);
                 selectedPlaylist = null;

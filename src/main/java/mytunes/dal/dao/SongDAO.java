@@ -89,8 +89,35 @@ public class SongDAO implements ISongDataAccess {
         try {
             SQLQuery(sql_delete);
             SQLQuery(sql);
+            reindexSongs();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void reindexSongs(){
+        String sql;
+        ArrayList<Integer> playlistIDs = new ArrayList<>();
+        try {
+            sql = "SELECT DISTINCT playlistID FROM SONG_PLAYLIST_LINK";
+            ResultSet rs = SQLQueryWithRS(sql);
+            while (rs.next()){
+                playlistIDs.add(rs.getInt("playlistID"));
+            }
+
+            for (int i = 0; i < playlistIDs.size(); i++){
+                rs = SQLQueryWithRS("SELECT * FROM SONG_PLAYLIST_LINK WHERE playlistID = " + playlistIDs.get(i));
+                int j = 1;
+                while (rs.next()){
+                    int currentSongIndex = rs.getInt("songIndex");
+                    sql = "UPDATE SONG_PLAYLIST_LINK SET songIndex = " + j + " WHERE songIndex = " + currentSongIndex;
+                    SQLQuery(sql);
+                    j++;
+                }
+            }
+
+        } catch (SQLException e) {
+             throw new RuntimeException(e);
         }
     }
 }
