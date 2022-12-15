@@ -8,7 +8,7 @@
 <AnchorPane maxHeight="600.0" maxWidth="750.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controllers.MainWindowController">
    <children>
       <TextField fx:id="filterTextField" layoutX="586.0" layoutY="14.0" onKeyTyped="#filterOnKeyTyped" prefHeight="25.0" prefWidth="300.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="15.0" />
-      <Slider fx:id="songTimeSlider" layoutX="265.0" layoutY="655.0" onMousePressed="#songTimeSliderMouseDown" onMouseReleased="#songTimeSliderMouseUp" prefHeight="15.0" prefWidth="600.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" />
+      <Slider fx:id="songTimeSlider" disable="true" layoutX="265.0" layoutY="655.0" onMousePressed="#songTimeSliderMouseDown" onMouseReleased="#songTimeSliderMouseUp" prefHeight="15.0" prefWidth="600.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" />
       <Slider fx:id="volumeControlSlider" layoutX="721.0" layoutY="476.0" majorTickUnit="10.0" orientation="VERTICAL" prefHeight="198.0" prefWidth="14.0" showTickLabels="true" showTickMarks="true" value="50.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="20.0" />
       <ListView fx:id="songsInPlaylistListView" layoutX="311.0" layoutY="65.0" onMouseClicked="#songsInPlaylistListviewMouseClicked" prefHeight="400.0" prefWidth="230.0" AnchorPane.leftAnchor="310.0" AnchorPane.topAnchor="65.0" />
       <Label layoutX="14.0" layoutY="45.0" prefHeight="20.0" prefWidth="50.0" text="Playlists" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="45.0">
