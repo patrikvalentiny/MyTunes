@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
@@ -73,35 +74,38 @@ public class NewSongViewController {
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
         File file;
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Music"));
         fileChooser.setTitle("Choose a song file");
         try {
-            if (txtFieldFile.getText() != null) {
+            if (txtFieldFile.getText() != null && !txtFieldFile.getText().isEmpty()) {
                 File previousFile = new File(Paths.get(txtFieldFile.getText()).toUri());
                 fileChooser.setInitialDirectory(new File(previousFile.getParentFile().getAbsolutePath()));
                 fileChooser.setInitialFileName(previousFile.getName());
             }
-            fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Music"));
-            fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("MP3 files", "*.mp3"));
             file = fileChooser.showOpenDialog(stage);
         } catch (Exception e){
-            fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Music"));
-            fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("MP3 files", "*.mp3"));
             file = fileChooser.showOpenDialog(stage);
         }
         if (file != null){
             txtFieldFile.setText(file.getAbsolutePath());
-
             //waits until media is ready, fills out available data for the user
-            Media media = new Media(file.toURI().toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setOnReady(() -> {
-                double d = media.getDuration().toSeconds();
-                duration = (int) d;
-                txtFieldDuration.setText(humanReadableTime(duration));
-                txtFieldTitle.setText((String) media.getMetadata().get("title"));
-                txtFieldArtist.setText((String) media.getMetadata().get("artist"));
-                comboBoxGenre.setValue((String) media.getMetadata().get("genre"));
-            });
+            try {
+                Media media = new Media(file.toURI().toString());
+                MediaPlayer mediaPlayer = new MediaPlayer(media);
+                mediaPlayer.setOnReady(() -> {
+                    double d = media.getDuration().toSeconds();
+                    duration = (int) d;
+                    txtFieldDuration.setText(humanReadableTime(duration));
+                    txtFieldTitle.setText((String) media.getMetadata().get("title"));
+                    txtFieldArtist.setText((String) media.getMetadata().get("artist"));
+                    comboBoxGenre.setValue((String) media.getMetadata().get("genre"));
+                });
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("The file you chose is not supported");
+            }
+
         }
     }
 

@@ -407,7 +407,9 @@ public class MainWindowController {
     }
 
     private void showSongsInPlaylist() {
-        songsInPlaylistListView.setItems(model.getSongsInPlaylist(selectedPlaylist));
+        if (selectedPlaylist != null) {
+            songsInPlaylistListView.setItems(model.getSongsInPlaylist(selectedPlaylist));
+        }
         songsInPlaylistListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Song song, boolean empty) {
