@@ -34,17 +34,17 @@
       <Button fx:id="songNewButton" layoutX="580.0" layoutY="470.0" mnemonicParsing="false" onAction="#songNewButtonAction" prefHeight="26.0" prefWidth="60.0" text="New..." AnchorPane.rightAnchor="560.0" AnchorPane.topAnchor="470.0" />
       <Button fx:id="songEditButton" layoutX="652.0" layoutY="470.0" mnemonicParsing="false" onAction="#songEditButtonAction" prefHeight="26.0" prefWidth="60.0" text="Edit..." AnchorPane.rightAnchor="490.0" AnchorPane.topAnchor="470.0" />
       <Button fx:id="songsDeleteButton" layoutX="720.0" layoutY="471.0" mnemonicParsing="false" onAction="#deleteButtonAction" prefWidth="60.0" text="Delete" AnchorPane.rightAnchor="420.0" AnchorPane.topAnchor="470.0" />
-      <ImageView fx:id="playPauseButton" fitHeight="40.0" fitWidth="40.0" layoutX="541.0" layoutY="607.0" onMousePressed="#ImageViewMouseDown" onMouseReleased="#playPauseMouseUp" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="580.0" AnchorPane.rightAnchor="580.0">
+      <ImageView fx:id="playPauseButton" fitHeight="40.0" fitWidth="40.0" layoutX="541.0" layoutY="607.0" onMousePressed="#imageViewMouseDown" onMouseReleased="#playPauseMouseUp" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="580.0" AnchorPane.rightAnchor="580.0">
          <image>
             <Image url="@../images/play.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="forwardButton" fitHeight="40.0" fitWidth="51.0" layoutX="640.0" layoutY="610.0" onMousePressed="#ImageViewMouseDown" onMouseReleased="#forwardMouseUp" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="530.0">
+      <ImageView fx:id="forwardButton" fitHeight="40.0" fitWidth="51.0" layoutX="640.0" layoutY="610.0" onMousePressed="#imageViewMouseDown" onMouseReleased="#forwardMouseUp" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="530.0">
          <image>
             <Image url="@../images/forward.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="rewindButton" fitHeight="40.0" fitWidth="51.0" layoutX="481.0" layoutY="607.0" onMousePressed="#ImageViewMouseDown" onMouseReleased="#rewindMouseUp" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="530.0">
+      <ImageView fx:id="rewindButton" fitHeight="40.0" fitWidth="51.0" layoutX="481.0" layoutY="607.0" onMousePressed="#imageViewMouseDown" onMouseReleased="#rewindMouseUp" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="530.0">
          <image>
             <Image url="@../images/rewind.png" />
          </image>
@@ -80,17 +80,17 @@
             <Image url="@../images/headphones.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="moveSongToPlaylistButton" fitHeight="20.0" fitWidth="20.0" layoutX="550.0" layoutY="65.0" onMousePressed="#moveSongToPlaylistMouseDown" onMouseReleased="#moveSongToPlaylistMouseUp" pickOnBounds="true" preserveRatio="true" rotate="90.0" AnchorPane.topAnchor="67.0">
+      <ImageView fx:id="moveSongToPlaylistButton" fitHeight="20.0" fitWidth="20.0" layoutX="550.0" layoutY="65.0" onMousePressed="#imageViewMouseDown" onMouseReleased="#moveSongToPlaylistMouseUp" pickOnBounds="true" preserveRatio="true" rotate="90.0" AnchorPane.topAnchor="67.0">
          <image>
             <Image url="@../images/arrow.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="moveSongDownButton" fitHeight="20.0" fitWidth="20.0" layoutX="402.0" layoutY="473.0" onMousePressed="#moveSongDownMouseDown" onMouseReleased="#moveSongDownMouseUp" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="345.0" AnchorPane.topAnchor="471.0">
+      <ImageView fx:id="moveSongDownButton" fitHeight="20.0" fitWidth="20.0" layoutX="402.0" layoutY="473.0" onMousePressed="#imageViewMouseDown" onMouseReleased="#moveSongDownMouseUp" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="345.0" AnchorPane.topAnchor="471.0">
          <image>
             <Image url="@../images/arrow.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="moveSongUpButton" fitHeight="20.0" fitWidth="20.0" layoutX="382.0" layoutY="473.0" onMousePressed="#moveSongUpMouseDown" onMouseReleased="#moveSongUpMouseUp" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.leftAnchor="315.0" AnchorPane.topAnchor="470.0">
+      <ImageView fx:id="moveSongUpButton" fitHeight="20.0" fitWidth="20.0" layoutX="382.0" layoutY="473.0" onMousePressed="#imageViewMouseDown" onMouseReleased="#moveSongUpMouseUp" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.leftAnchor="315.0" AnchorPane.topAnchor="470.0">
          <image>
             <Image url="@../images/arrow.png" />
          </image>

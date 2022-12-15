@@ -58,7 +58,7 @@ public class MainWindowController {
     private int playlistIndex = -1;
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         showAllSongs();
         showAllPlaylists();
 
@@ -69,7 +69,7 @@ public class MainWindowController {
         setupListeners();
     }
 
-    public void setupListeners() {
+    private void setupListeners() {
         // Listener for loading all songs when filter text field is put in focus
         filterTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue)
@@ -113,15 +113,16 @@ public class MainWindowController {
      *
      * @param mouseEvent The mouse event that triggered this method.
      */
-    public void playPauseMouseUp(MouseEvent mouseEvent) {
+    @FXML
+    private void playPauseMouseUp(MouseEvent mouseEvent) {
         if (mediaPlayer != null) {
             playPauseMusic();
         }
         resetOpacity(mouseEvent);
     }
 
-
-    public void forwardMouseUp(MouseEvent mouseEvent) {
+    @FXML
+    private void forwardMouseUp(MouseEvent mouseEvent) {
         if (mediaPlayer != null) {
             forwardMusic();
         }
@@ -134,7 +135,8 @@ public class MainWindowController {
         playSong(queue.get(currentSongIndex));
     }
 
-    public void rewindMouseUp(MouseEvent mouseEvent) {
+    @FXML
+    private void rewindMouseUp(MouseEvent mouseEvent) {
         if (mediaPlayer != null) {
             rewindMusic();
         }
@@ -142,7 +144,7 @@ public class MainWindowController {
     }
 
     /**
-     * If the song has been playing for more than 2 seconds, it will be rewinded to the beginning.
+     * If the song has been playing for more than 2 seconds, it will be rewound to the beginning.
      * Otherwise, the previous song will be played.
      */
     private void rewindMusic() {
@@ -160,7 +162,8 @@ public class MainWindowController {
      *
      * @param mouseEvent The mouse event that triggered this method
      */
-    public void ImageViewMouseDown(MouseEvent mouseEvent) {
+    @FXML
+    private void imageViewMouseDown(MouseEvent mouseEvent) {
         ImageView imageView = (ImageView) mouseEvent.getSource();
         imageView.setOpacity(0.5);
     }
@@ -181,7 +184,8 @@ public class MainWindowController {
      *
      * @param actionEvent The action event that triggered this method
      */
-    public void deleteButtonAction(ActionEvent actionEvent) {
+    @FXML
+    private void deleteButtonAction(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
 
         String type = "";
@@ -229,24 +233,29 @@ public class MainWindowController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            if (type.equals("song")) {
-                Song song = allSongsTableView.getSelectionModel().getSelectedItem();
-                model.deleteSong(song);
-                showAllSongs();
-                showSongsInPlaylist();
-                playlistsTableView.refresh();
-            } else if (type.equals("playlist")) {
-                model.deletePlaylist(selectedPlaylist);
-                selectedPlaylist = null;
-                playlistIndex = -1;
-                showAllPlaylists();
-                songsInPlaylistListView.getItems().clear();
-            } else {
-                Song song = songsInPlaylistListView.getSelectionModel().getSelectedItem();
-                int songIndex = songsInPlaylistListView.getSelectionModel().getSelectedIndex() + 1; // database indexes start from 1
-                model.deleteSongInPlaylist(song, selectedPlaylist, songIndex);
-                showSongsInPlaylist();
-                showAllPlaylists();
+            switch (type) {
+                case "song" -> {
+                    Song song = allSongsTableView.getSelectionModel().getSelectedItem();
+                    model.deleteSong(song);
+                    showAllSongs();
+                    showSongsInPlaylist();
+                    playlistsTableView.refresh();
+                }
+                case "playlist" -> {
+                    model.deletePlaylist(selectedPlaylist);
+                    selectedPlaylist = null;
+                    playlistIndex = -1;
+                    showAllPlaylists();
+                    songsInPlaylistListView.getItems().clear();
+                }
+                case "song in playlist" -> {
+                    Song song = songsInPlaylistListView.getSelectionModel().getSelectedItem();
+                    int songIndex = songsInPlaylistListView.getSelectionModel().getSelectedIndex() + 1; // database indexes start from 1
+
+                    model.deleteSongInPlaylist(song, selectedPlaylist, songIndex);
+                    showSongsInPlaylist();
+                    showAllPlaylists();
+                }
             }
         }
     }
@@ -258,7 +267,8 @@ public class MainWindowController {
      * @param ignoredActionEvent The action event that triggered this method
      * @throws IOException thrown when the fxml file is not found
      */
-    public void playlistNewButtonAction(ActionEvent ignoredActionEvent) throws IOException {
+    @FXML
+    private void playlistNewButtonAction(ActionEvent ignoredActionEvent) throws IOException {
         Object[] objects = openNewWindow("Add Playlist", "views/new-playlist-view.fxml", "images/playlist.png");
         FXMLLoader fxmlLoader = (FXMLLoader) objects[0];
         Window window = (Window) objects[1];
@@ -275,7 +285,8 @@ public class MainWindowController {
      * @param ignoredActionEvent The action event that triggered this method
      * @throws IOException Thrown when the fxml file is not found
      */
-    public void playlistEditButtonAction(ActionEvent ignoredActionEvent) throws IOException {
+    @FXML
+    private void playlistEditButtonAction(ActionEvent ignoredActionEvent) throws IOException {
         Playlist playlist = playlistsTableView.getSelectionModel().getSelectedItem();
         if (playlist == null)
             new Alert(Alert.AlertType.ERROR, "Please select a playlist to edit").showAndWait();
@@ -291,7 +302,8 @@ public class MainWindowController {
         }
     }
 
-    public void filterOnKeyTyped(KeyEvent ignoredKeyEvent) {
+    @FXML
+    private void filterOnKeyTyped(KeyEvent ignoredKeyEvent) {
         allSongsTableView.getItems().setAll(model.search(filterTextField.getText()));
         allSongsTableView.refresh();
     }
@@ -303,7 +315,8 @@ public class MainWindowController {
      * @param ignoredActionEvent The action event that triggered this method
      * @throws IOException thrown when the fxml file is not found
      */
-    public void songNewButtonAction(ActionEvent ignoredActionEvent) throws IOException {
+    @FXML
+    private void songNewButtonAction(ActionEvent ignoredActionEvent) throws IOException {
         Object[] objects = openNewWindow("Add song", "views/new-song-view.fxml", "images/record.png");
         FXMLLoader fxmlLoader = (FXMLLoader) objects[0];
         Window window = (Window) objects[1];
@@ -320,7 +333,8 @@ public class MainWindowController {
      * @param ignoredActionEvent The action event that triggered this method
      * @throws IOException Thrown when the fxml file is not found
      */
-    public void songEditButtonAction(ActionEvent ignoredActionEvent) throws IOException {
+    @FXML
+    private void songEditButtonAction(ActionEvent ignoredActionEvent) throws IOException {
         Song selectedSong = allSongsTableView.getSelectionModel().getSelectedItem();
         if (selectedSong == null) {
             new Alert(Alert.AlertType.ERROR, "Please select a song to edit").showAndWait();
@@ -356,10 +370,6 @@ public class MainWindowController {
         return new Object[]{fxmlLoader, window};
     }
 
-    public void moveSongToPlaylistMouseDown(MouseEvent mouseEvent) {
-        ImageViewMouseDown(mouseEvent);
-    }
-
     /**
      * Called after clicking an arrow for moving songs from all songs tableview to playlist listview
      * On releasing the mouse button, the selected song is moved into a selected playlist
@@ -367,7 +377,8 @@ public class MainWindowController {
      *
      * @param mouseEvent The mouse event that triggered this method
      */
-    public void moveSongToPlaylistMouseUp(MouseEvent mouseEvent) {
+    @FXML
+    private void moveSongToPlaylistMouseUp(MouseEvent mouseEvent) {
         resetOpacity(mouseEvent);
         Song song = allSongsTableView.getSelectionModel().getSelectedItem();
         if (song == null || selectedPlaylist == null) {
@@ -378,8 +389,8 @@ public class MainWindowController {
             showAllPlaylists();
         }
     }
-
-    public void playlistTableViewOnMouseUp(MouseEvent ignoredMouseEvent) {
+    @FXML
+    private void playlistTableViewOnMouseUp(MouseEvent ignoredMouseEvent) {
         if (playlistsTableView.getSelectionModel().getSelectedItem() != null) {
             selectedPlaylist = playlistsTableView.getSelectionModel().getSelectedItem();
             playlistIndex = playlistsTableView.getSelectionModel().getSelectedIndex();
@@ -444,14 +455,16 @@ public class MainWindowController {
         });
     }
 
-    public void songTimeSliderMouseUp(MouseEvent ignoredMouseEvent) {
+    @FXML
+    private void songTimeSliderMouseUp(MouseEvent ignoredMouseEvent) {
         if (mediaPlayer != null) {
             mediaPlayer.seek(Duration.seconds(songTimeSlider.getValue()));
             isUserChangingSongTime = false;
         }
     }
 
-    public void songTimeSliderMouseDown(MouseEvent ignoredMouseEvent) {
+    @FXML
+    private void songTimeSliderMouseDown(MouseEvent ignoredMouseEvent) {
         if (mediaPlayer != null) {
             isUserChangingSongTime = true;
             lblSongTimeSinceStart.setText(humanReadableTime(songTimeSlider.getValue()));
@@ -466,7 +479,8 @@ public class MainWindowController {
      *
      * @param mouseEvent The mouse event that triggered this method
      */
-    public void moveSongUpMouseUp(MouseEvent mouseEvent) {
+    @FXML
+    private void moveSongUpMouseUp(MouseEvent mouseEvent) {
         resetOpacity(mouseEvent);
         Playlist playlist = playlistsTableView.getSelectionModel().getSelectedItem();
         Song song = songsInPlaylistListView.getSelectionModel().getSelectedItem();
@@ -486,10 +500,6 @@ public class MainWindowController {
         }
     }
 
-    public void moveSongUpMouseDown(MouseEvent mouseEvent) {
-        ImageViewMouseDown(mouseEvent);
-    }
-
     /**
      * Called after clicking an arrow for moving songs down in a playlist listview
      * On releasing the mouse button, the selected song is moved up down an index
@@ -498,7 +508,8 @@ public class MainWindowController {
      *
      * @param mouseEvent The mouse event that triggered this method
      */
-    public void moveSongDownMouseUp(MouseEvent mouseEvent) {
+    @FXML
+    private void moveSongDownMouseUp(MouseEvent mouseEvent) {
         resetOpacity(mouseEvent);
         Playlist playlist = playlistsTableView.getSelectionModel().getSelectedItem();
         Song song = songsInPlaylistListView.getSelectionModel().getSelectedItem();
@@ -518,11 +529,8 @@ public class MainWindowController {
         }
     }
 
-    public void moveSongDownMouseDown(MouseEvent mouseEvent) {
-        ImageViewMouseDown(mouseEvent);
-    }
-
-    public void allSongsTableViewMouseClicked(MouseEvent mouseEvent) {
+    @FXML
+    private void allSongsTableViewMouseClicked(MouseEvent mouseEvent) {
         // TODO: Sometimes playing songs takes too long for no apparent reason - optional: fix this
         List<Song> queue = model.getQueue();
         if (mouseEvent.getClickCount() == 2 && (queue.get(currentSongIndex) != null)) {
@@ -570,7 +578,8 @@ public class MainWindowController {
         }
     }
 
-    public void songsInPlaylistListviewMouseClicked(MouseEvent mouseEvent) {
+    @FXML
+    private void songsInPlaylistListviewMouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2) {
             Playlist playlist = playlistsTableView.getSelectionModel().getSelectedItem();
             currentSongIndex = songsInPlaylistListView.getSelectionModel().getSelectedIndex();
