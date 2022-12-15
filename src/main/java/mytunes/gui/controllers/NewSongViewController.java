@@ -80,6 +80,7 @@ public class NewSongViewController {
                 fileChooser.setInitialDirectory(new File(previousFile.getParentFile().getAbsolutePath()));
                 fileChooser.setInitialFileName(previousFile.getName());
             }
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Music"));
             fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("MP3 files", "*.mp3"));
             file = fileChooser.showOpenDialog(stage);
         } catch (Exception e){
