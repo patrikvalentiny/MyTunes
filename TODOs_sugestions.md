@@ -1,5 +1,6 @@
 # USE THIS FOR REMEMBERING THINGS TO DO, SUGGESTIONS, ETC.
 
+- [X] Consider using one loading for filter and showing all songs in list
 - [X] Connection Pooling
 - [ ] Exception handling with classes - maybe if we have time
 - [X] Change functionality when song ends

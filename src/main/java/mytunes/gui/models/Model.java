@@ -13,7 +13,7 @@ import java.util.List;
 public class Model {
     private final ObservableList<Genre> genres;
     private final ObservableList<Playlist> playlists;
-    private final ObservableList<Song> allSongs, songsInPlaylist;
+    private final ObservableList<Song> songsInPlaylist;
     private Song songToEdit;
     private Playlist playlistToEdit;
     private final LogicInterface bll = new LogicManager();
@@ -23,7 +23,6 @@ public class Model {
     public Model(){
         genres = FXCollections.observableArrayList();
         playlists = FXCollections.observableArrayList();
-        allSongs = FXCollections.observableArrayList();
         songsInPlaylist = FXCollections.observableArrayList();
         queue = getAllSongs();
     }
@@ -46,22 +45,16 @@ public class Model {
 
     public void createSong(Song song){
         bll.createSong(song);
-        loadAllSongs();
+        getAllSongs();
     }
 
     public void deleteSong(Song song){
         bll.deleteSong(song);
-        loadAllSongs();
+        getAllSongs();
     }
 
-    public void loadAllSongs(){
-        allSongs.clear();
-        allSongs.addAll(bll.getAllSongs());
-    }
-
-    public ObservableList<Song> getAllSongs() {
-        loadAllSongs();
-        return allSongs;
+    public List<Song> getAllSongs() {
+        return bll.getAllSongs();
     }
 
     public void updateSong(Song song){
@@ -117,14 +110,6 @@ public class Model {
 
     public List<Song> search(String query){
         return bll.filterSongs(query);
-    }
-
-    public void loadSongsToMemory(){
-        bll.loadSongsToMemory();
-    }
-
-    public void removeSongsFromMemory(){
-        bll.removeSongsFromMemory();
     }
 
     public void moveSongToPlaylist(Song song, Playlist playlist) {
