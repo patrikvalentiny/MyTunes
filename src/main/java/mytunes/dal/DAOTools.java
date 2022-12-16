@@ -1,12 +1,10 @@
 package mytunes.dal;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DAOTools {
     private static final ConnectionManager cm = new ConnectionManager();
+    private static PreparedStatement ps;
     /**
      * Used to replace ' with '' in a string to make it SQL compatible
      *
@@ -28,8 +26,8 @@ public class DAOTools {
      */
     public static ResultSet SQLQueryWithRS(String query) throws SQLException {
         Connection con = cm.getConnection();
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
+        ps = con.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
         cm.releaseConnection(con);
         return rs;
 
@@ -42,8 +40,8 @@ public class DAOTools {
      */
     public static void SQLQuery(String query) throws SQLException {
         Connection con = cm.getConnection();
-        Statement stmt = con.createStatement();
-        stmt.execute(query);
+        ps = con.prepareStatement(query);
+        ps.execute();
         cm.releaseConnection(con);
     }
 
