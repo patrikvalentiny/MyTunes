@@ -65,18 +65,12 @@ public class MainWindowController {
         allSongsTableView.setPlaceholder(new Label("No songs found"));
         playlistsTableView.setPlaceholder(new Label("No playlists found"));
         songsInPlaylistListView.setPlaceholder(new Label("No songs in playlist"));
-        volumeControlSlider.setValue(volume * 100);
+
         setupListeners();
     }
 
     private void setupListeners() {
-        // Listener for loading all songs when filter text field is put in focus
-        filterTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue)
-                model.loadSongsToMemory();
-            else
-                model.removeSongsFromMemory();
-        });
+        volumeControlSlider.setValue(volume * 100);
         // listener for updating the song time slider
         volumeControlSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             volume = newValue.doubleValue() / 100;
@@ -306,7 +300,6 @@ public class MainWindowController {
     @FXML
     private void filterOnKeyTyped(KeyEvent ignoredKeyEvent) {
         allSongsTableView.getItems().setAll(model.search(filterTextField.getText()));
-        allSongsTableView.refresh();
     }
 
     /**

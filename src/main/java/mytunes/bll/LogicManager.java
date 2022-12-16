@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogicManager implements LogicInterface{
-    private final ISongDataAccess songDAO = new SongDAO();
-    private final IGenreDataAccess genreDAO = new GenreDAO();
-    private final IPlaylistDataAccess playlistDAO = new PlaylistDAO();
-    private List<Song> allSongs;
+    private static final ISongDataAccess songDAO = new SongDAO();
+    private static final IGenreDataAccess genreDAO = new GenreDAO();
+    private static final IPlaylistDataAccess playlistDAO = new PlaylistDAO();
+    private static List<Song> allSongs;
 
     public void createSong(Song song) {
         songDAO.addSong(song);
@@ -32,9 +32,9 @@ public class LogicManager implements LogicInterface{
     }
 
     public List<Song> getAllSongs() {
-        return songDAO.getAllSongs();
+        allSongs = songDAO.getAllSongs();
+        return allSongs;
     }
-
     public void createPlaylist(Playlist playlist){
         playlistDAO.addPlaylist(playlist);
     }
@@ -54,14 +54,7 @@ public class LogicManager implements LogicInterface{
         playlistDAO.updatePlaylist(playlist);
     }
 
-    public void loadSongsToMemory(){
-        allSongs = songDAO.getAllSongs();
-    }
-
-    public void removeSongsFromMemory(){
-        allSongs.clear();
-    }
-
+    // TODO: Does not work for artist
     public List<Song> filterSongs(String query){
         List<Song> filteredSongs = new ArrayList<>();
         for (Song song : allSongs){
