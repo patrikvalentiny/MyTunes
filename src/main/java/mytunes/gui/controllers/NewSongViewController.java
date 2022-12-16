@@ -157,6 +157,7 @@ public class NewSongViewController {
         comboBoxGenre.setValue(songToEdit.getGenre().getName());
         txtFieldFile.setText(songToEdit.getPath());
         txtFieldDuration.setText(humanReadableTime(songToEdit.getDuration()));
+        duration = songToEdit.getDuration();
     }
 
     public void setComboBoxItems(){

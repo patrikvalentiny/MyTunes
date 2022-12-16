@@ -10,6 +10,7 @@
 - [x] Keep focus on a selected playlist
 - [X] If a song is deleted completely, indexes in playlist don't update
 - [ ] Start app from closing state
+- [x] Duration resets to 0 when editing a song
 - [ ] Scrolling text if song / artist name is too long
 -
 - ![TODO](https://preview.redd.it/mnr1owzlxt4a1.jpg?width=960&crop=smart&auto=webp&s=0dc59fabb8790a74cf3939e6f803bca1c56be64e)
