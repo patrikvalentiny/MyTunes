@@ -239,6 +239,7 @@ public class MainWindowController {
                     model.deleteSong(song);
                     showAllSongs();
                     showSongsInPlaylist();
+                    showAllPlaylists();
                     playlistsTableView.refresh();
                 }
                 case "playlist" -> {
