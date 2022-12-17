@@ -95,11 +95,17 @@ public class PlaylistDAO implements IPlaylistDataAccess {
         }
     }
     public void addSongToPlaylist(int songID, int playlistID) {
-        String sql = "INSERT INTO SONG_PLAYLIST_LINK (songId, playlistId) VALUES (" + songID + ", " + playlistID + ")";
+        String select = "SELECT TOP 1 playlistID, songIndex FROM SONG_PLAYLIST_LINK WHERE playlistId = " + playlistID + " ORDER BY songIndex DESC";
         try {
+            ResultSet rs  = SQLQueryWithRS(select);
+            int songIndex = 1;
+            while (rs.next()) {
+                songIndex = rs.getInt("songIndex") + 1;
+            }
+            String sql = "INSERT INTO SONG_PLAYLIST_LINK (songId, playlistId, songIndex) VALUES (" + songID + ", " + playlistID + ", " + songIndex + ")";
             SQLQuery(sql);
             calculateTotalLength(playlistID);
-            updateIndexInPlaylist(songID, playlistID);
+            //updateIndexInPlaylist(songID, playlistID);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -148,13 +154,10 @@ public class PlaylistDAO implements IPlaylistDataAccess {
     }
 
     public void calculateTotalLength(int playlistID){
-        List<Song> songsInPlaylist = getAllSongsInPlaylist(playlistID);
         try {
-            int totalLength = 0;
-            for (Song song : songsInPlaylist){
-                totalLength += song.getDuration();
-            }
-            String sql = "UPDATE ALL_PLAYLISTS SET total_length = " + totalLength + " WHERE id = " + playlistID;
+            String sql = "UPDATE ALL_PLAYLISTS SET total_length = (SELECT SUM(duration) FROM SONG_PLAYLIST_LINK " +
+                    "INNER JOIN ALL_SONGS ON SONG_PLAYLIST_LINK.songID = ALL_SONGS.id " +
+                    "WHERE playlistID = " + playlistID + ") WHERE id = " + playlistID;
             SQLQuery(sql);
         } catch (SQLException ex) {
             ex.printStackTrace();
