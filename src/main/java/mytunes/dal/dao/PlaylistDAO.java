@@ -12,7 +12,6 @@ import java.util.List;
 import static mytunes.dal.DAOTools.*;
 
 public class PlaylistDAO implements IPlaylistDataAccess {
-
     public List<Playlist> getAllPlaylists() {
         ArrayList<Playlist> allPlaylists = new ArrayList<>();
         String sql = "SELECT * FROM ALL_PLAYLISTS";
@@ -94,6 +93,7 @@ public class PlaylistDAO implements IPlaylistDataAccess {
             return null;
         }
     }
+
     public void addSongToPlaylist(int songID, int playlistID) {
         String select = "SELECT TOP 1 playlistID, songIndex FROM SONG_PLAYLIST_LINK WHERE playlistId = " + playlistID + " ORDER BY songIndex DESC";
         try {

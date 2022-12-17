@@ -18,7 +18,7 @@ public class SongDAO implements ISongDataAccess {
      * @return a list of all available songs from the database
      */
     public List<Song> getAllSongs() {
-        ArrayList<Song> allSongs =new ArrayList<>();
+        ArrayList<Song> allSongs = new ArrayList<>();
         String sql = "SELECT * FROM ALL_SONGS";
         try (ResultSet rs = SQLQueryWithRS(sql)){
             while (rs.next()) {
@@ -83,10 +83,9 @@ public class SongDAO implements ISongDataAccess {
 
     public void deleteSong(Song song){
         int id  = song.getId();
-        String sql_delete = "DELETE FROM SONG_PLAYLIST_LINK WHERE songID = " + id;
-        String sql = "DELETE FROM ALL_SONGS WHERE id = " + id;
+        String sql = "DELETE FROM SONG_PLAYLIST_LINK WHERE songID = " + id + "; " +
+                "DELETE FROM ALL_SONGS WHERE id = " + id;
         try {
-            SQLQuery(sql_delete);
             SQLQuery(sql);
             reindexSongs();
         } catch (SQLException e) {
@@ -115,7 +114,6 @@ public class SongDAO implements ISongDataAccess {
                     j++;
                 }
             }
-
         } catch (SQLException e) {
              throw new RuntimeException(e);
         }
