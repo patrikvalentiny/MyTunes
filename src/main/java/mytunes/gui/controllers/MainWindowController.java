@@ -528,10 +528,11 @@ public class MainWindowController {
     @FXML
     private void allSongsTableViewMouseClicked(MouseEvent mouseEvent) {
         List<Song> queue = model.getQueue();
-        if (mouseEvent.getClickCount() == 2 && (queue.get(currentSongIndex) != null)) {
+        if (mouseEvent.getClickCount() == 2 && currentSongIndex != -1 && (queue.get(currentSongIndex) != null)) {
             model.setQueue(allSongsTableView.getItems());
             currentSongIndex = allSongsTableView.getSelectionModel().getSelectedIndex();
-            playSong(model.getQueue().get(currentSongIndex));
+            if (currentSongIndex != -1)
+                playSong(model.getQueue().get(currentSongIndex));
         }
     }
 
