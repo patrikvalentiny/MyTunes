@@ -529,7 +529,7 @@ public class MainWindowController {
     private void allSongsTableViewMouseClicked(MouseEvent mouseEvent) {
         List<Song> queue = model.getQueue();
         if (mouseEvent.getClickCount() == 2 && (queue.get(currentSongIndex) != null)) {
-            model.setQueue(model.getAllSongs());
+            model.setQueue(allSongsTableView.getItems());
             currentSongIndex = allSongsTableView.getSelectionModel().getSelectedIndex();
             playSong(model.getQueue().get(currentSongIndex));
         }
@@ -556,8 +556,8 @@ public class MainWindowController {
                 new Alert(Alert.AlertType.ERROR, "An error occurred while trying to play " + song.getTitle()).showAndWait();
             }
             // making sure the playing is stopped
-            isPlaying = true;
-            playPauseMusic();
+            isPlaying = false;
+            playPauseButton.setImage(new Image(Objects.requireNonNull(MyTunes.class.getResourceAsStream("images/play.png"))));
         }
     }
 
