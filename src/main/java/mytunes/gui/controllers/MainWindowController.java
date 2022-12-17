@@ -527,7 +527,6 @@ public class MainWindowController {
 
     @FXML
     private void allSongsTableViewMouseClicked(MouseEvent mouseEvent) {
-        // TODO: Sometimes playing songs takes too long for no apparent reason - optional: fix this
         List<Song> queue = model.getQueue();
         if (mouseEvent.getClickCount() == 2 && (queue.get(currentSongIndex) != null)) {
             model.setQueue(model.getAllSongs());

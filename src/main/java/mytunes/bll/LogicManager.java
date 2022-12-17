@@ -53,8 +53,6 @@ public class LogicManager implements LogicInterface{
     public void updatePlaylist(Playlist playlist) {
         playlistDAO.updatePlaylist(playlist);
     }
-
-    // TODO: Does not work for artist
     public List<Song> filterSongs(String query){
         List<Song> filteredSongs = new ArrayList<>();
         for (Song song : allSongs){
