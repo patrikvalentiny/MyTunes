@@ -104,7 +104,7 @@ public class SongDAO implements ISongDataAccess {
             }
 
             for (Integer playlistID : playlistIDs) {
-                rs = SQLQueryWithRS("SELECT * FROM SONG_PLAYLIST_LINK WHERE playlistID = " + playlistID);
+                rs = SQLQueryWithRS("SELECT * FROM SONG_PLAYLIST_LINK WHERE playlistID = " + playlistID + " ORDER BY songIndex");
                 int j = 1;
                 while (rs.next()) {
                     int currentSongIndex = rs.getInt("songIndex");
