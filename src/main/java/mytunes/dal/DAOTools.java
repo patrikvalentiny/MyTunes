@@ -18,7 +18,6 @@ public class DAOTools {
     }
 
     /**
-     * SHOULD BE USED WITH A TRY-WITH-RESOURCES STATEMENT
      * Used to execute a SQL query that returns a ResultSet
      * @param query the SQL query to execute
      * @return the ResultSet of the query
