@@ -3,25 +3,15 @@ package mytunes.be.tools;
 public class BETools {
 
     public static String convertSecondsIntoString(int duration){
-        String totalLengthAsAString = "";
         int seconds = duration % 60;
         int minutes = (duration / 60) % 60;
         int hours = (duration / 60) / 60;
 
-        if (hours > 0){
-            if (hours < 10)
-                totalLengthAsAString += "0";
-            totalLengthAsAString += hours + ":";
+        if (hours > 0) {
+            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        } else {
+            return String.format("%02d:%02d", minutes, seconds);
         }
 
-        if (minutes < 10)
-            totalLengthAsAString += "0";
-        totalLengthAsAString += minutes + ":";
-
-        if (seconds < 10)
-            totalLengthAsAString += "0";
-        totalLengthAsAString += seconds;
-
-        return totalLengthAsAString;
     }
 }
