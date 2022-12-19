@@ -50,7 +50,8 @@ public class NewSongViewController {
      * @param ignoredActionEvent The action event that triggered this method
      * @throws IOException Thrown when the fxml file is not found
      */
-    public void btnGenreMoreAction(ActionEvent ignoredActionEvent) throws IOException {
+    @FXML
+    private void btnGenreMoreAction(ActionEvent ignoredActionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MyTunes.class.getResource("views/new-genre-view.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader.load());
@@ -70,7 +71,8 @@ public class NewSongViewController {
      *
      * @param ignoredActionEvent The action event that triggered this method
      */
-    public void btnFileChooseAction(ActionEvent ignoredActionEvent) {
+    @FXML
+    private void btnFileChooseAction(ActionEvent ignoredActionEvent) {
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
         File file;
@@ -115,7 +117,8 @@ public class NewSongViewController {
      *
      * @param actionEvent The action event that triggered this method
      */
-    public void btnSaveAction(ActionEvent actionEvent) {
+    @FXML
+    private void btnSaveAction(ActionEvent actionEvent) {
         // Cleaning up the input and setting variables
         String title = txtFieldTitle.getText().trim();
         String filepath = txtFieldFile.getText().trim();
@@ -144,7 +147,8 @@ public class NewSongViewController {
      *
      * @param actionEvent The action event that triggered this method
      */
-    public void btnCancelAction(ActionEvent actionEvent) {
+    @FXML
+    private void btnCancelAction(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();
         node.getScene().getWindow().hide();
     }

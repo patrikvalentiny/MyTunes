@@ -4,6 +4,7 @@ import mytunes.be.Genre;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface LogicInterface {
@@ -48,7 +49,7 @@ public interface LogicInterface {
      * calls the addPlaylist() method in playlistDAO
      * @param playlist the playlist to be created
      */
-    void createPlaylist(Playlist playlist);
+    void createPlaylist(Playlist playlist) throws SQLException;
 
     /**
      * calls the deletePlaylist() method in playlistDAO
@@ -60,7 +61,7 @@ public interface LogicInterface {
      * calls the updatePlaylist() method in playlistDAO
      * @param playlist the playlist to be updated
      */
-    void updatePlaylist(Playlist playlist);
+    void updatePlaylist(Playlist playlist) throws SQLException;
 
     /**
      * Calls a getAllPlaylists() method in playlistDAO

@@ -10,6 +10,7 @@ import mytunes.dal.interfaces.IGenreDataAccess;
 import mytunes.dal.interfaces.IPlaylistDataAccess;
 import mytunes.dal.interfaces.ISongDataAccess;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class LogicManager implements LogicInterface{
         allSongs = songDAO.getAllSongs();
         return allSongs;
     }
-    public void createPlaylist(Playlist playlist){
+    public void createPlaylist(Playlist playlist) throws SQLException {
         playlistDAO.addPlaylist(playlist);
     }
 
@@ -50,7 +51,7 @@ public class LogicManager implements LogicInterface{
         playlistDAO.deletePlaylist(playlist);
     }
 
-    public void updatePlaylist(Playlist playlist) {
+    public void updatePlaylist(Playlist playlist) throws SQLException {
         playlistDAO.updatePlaylist(playlist);
     }
     public List<Song> filterSongs(String query){

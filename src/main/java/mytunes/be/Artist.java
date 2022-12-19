@@ -16,6 +16,7 @@ public class Artist {
     public void setId(int id) {
         this.id = id;
     }
+
     public int getId() {
         return id;
     }

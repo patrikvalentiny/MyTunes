@@ -29,7 +29,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class MainWindowController {
+
     private final Model model = new Model();
+
     @FXML
     private Label currentArtistLabel, currentSongsLabel, lblSongTimeUntilEnd, lblSongTimeSinceStart;
     @FXML
@@ -48,11 +50,12 @@ public class MainWindowController {
     private TableView<Playlist> playlistsTableView;
     @FXML
     private TableColumn<Playlist, String> playlistNameColumn, totalLengthColumn;
+
     private boolean isPlaying = false;
     private boolean isUserChangingSongTime = false;
     private MediaPlayer mediaPlayer;
-
     private double volume = 0.05;
+
     private int currentSongIndex;
     private Playlist selectedPlaylist;
     private int playlistIndex = -1;
