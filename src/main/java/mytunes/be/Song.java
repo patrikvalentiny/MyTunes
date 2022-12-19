@@ -10,7 +10,7 @@ public class Song {
     private Genre genre;
     private int indexInPlaylist;
 
-    public Song(String title, Artist artist, Genre genre, String path,  int duration) {
+    public Song(String title, Artist artist, Genre genre, String path, int duration) {
         this.title = title;
         this.artist = artist;
         this.duration = duration;
@@ -51,6 +51,7 @@ public class Song {
         return duration;
     }
 
+    @Override
     public String toString(){
         return  "ID: " + id + ", Title: " + title + ", Artist: " + artist.getName() + ", Genre: " + genre.getName() +
                 ", Duration: " + duration + ", Path: " + path;

@@ -14,9 +14,6 @@ import static mytunes.dal.DAOTools.*;
 
 public class SongDAO implements ISongDataAccess {
 
-    /**
-     * @return a list of all available songs from the database
-     */
     public List<Song> getAllSongs() {
         ArrayList<Song> allSongs = new ArrayList<>();
         String sql = "SELECT * FROM ALL_SONGS";

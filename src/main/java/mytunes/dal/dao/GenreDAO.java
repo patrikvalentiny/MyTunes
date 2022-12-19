@@ -11,6 +11,7 @@ import java.util.List;
 import static mytunes.dal.DAOTools.*;
 
 public class GenreDAO implements IGenreDataAccess {
+
     public List<Genre> getAllGenres() {
         ArrayList<Genre> allGenres = new ArrayList<>();
         String sql = "SELECT * FROM GENRES";

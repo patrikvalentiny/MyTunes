@@ -8,6 +8,7 @@ import mytunes.be.Song;
 import mytunes.bll.LogicInterface;
 import mytunes.bll.LogicManager;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class Model {
@@ -61,7 +62,7 @@ public class Model {
         bll.updateSong(new Song(songToEdit.getId(), song.getTitle(), song.getArtist(), song.getGenre(), song.getPath(), song.getDuration()));
     }
 
-    public void createPlaylist(Playlist playlist){
+    public void createPlaylist(Playlist playlist) throws SQLException {
         bll.createPlaylist(playlist);
         loadAllPlaylists();
     }
@@ -71,7 +72,7 @@ public class Model {
         loadAllPlaylists();
     }
 
-    public void updatePlaylist(Playlist playlist){
+    public void updatePlaylist(Playlist playlist) throws SQLException {
         bll.updatePlaylist(new Playlist(playlistToEdit.getId(), playlist.getName(), playlist.getTotalLength()));
     }
 

@@ -12,6 +12,7 @@ import java.util.List;
 import static mytunes.dal.DAOTools.*;
 
 public class PlaylistDAO implements IPlaylistDataAccess {
+
     public List<Playlist> getAllPlaylists() {
         ArrayList<Playlist> allPlaylists = new ArrayList<>();
         String sql = "SELECT * FROM ALL_PLAYLISTS";
@@ -41,16 +42,13 @@ public class PlaylistDAO implements IPlaylistDataAccess {
         }
     }
 
-    public void addPlaylist(Playlist playlist) {
+    public void addPlaylist(Playlist playlist) throws SQLException {
         String sql = "INSERT INTO ALL_PLAYLISTS (playlistName, total_length) " +
                 "VALUES ('" + validateStringForSQL(playlist.getName()) + "', "
                 + playlist.getTotalLength() + ")";
-        try {
-            SQLQuery(sql);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        SQLQuery(sql);
     }
+
 
     public void deletePlaylist(Playlist playlist) {
         int id = playlist.getId();
@@ -64,15 +62,11 @@ public class PlaylistDAO implements IPlaylistDataAccess {
         }
     }
 
-    public void updatePlaylist(Playlist playlist) {
+    public void updatePlaylist(Playlist playlist) throws SQLException {
         String sql = "UPDATE ALL_PLAYLISTS SET playlistName = '" + validateStringForSQL(playlist.getName()) + "', "
                 + "total_length = '" + playlist.getTotalLength() + "' "
                 + "WHERE id = " + playlist.getId();
-        try {
-            SQLQuery(sql);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        SQLQuery(sql);
     }
 
     public List<Song> getAllSongsInPlaylist(int playlistID) {
@@ -105,7 +99,6 @@ public class PlaylistDAO implements IPlaylistDataAccess {
             String sql = "INSERT INTO SONG_PLAYLIST_LINK (songId, playlistId, songIndex) VALUES (" + songID + ", " + playlistID + ", " + songIndex + ")";
             SQLQuery(sql);
             calculateTotalLength(playlistID);
-            //updateIndexInPlaylist(songID, playlistID);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

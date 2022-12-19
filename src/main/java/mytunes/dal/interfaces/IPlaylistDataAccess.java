@@ -3,6 +3,7 @@ package mytunes.dal.interfaces;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -25,7 +26,7 @@ public interface IPlaylistDataAccess {
      * Saves the information about a new playlist into the database
      * @param playlist the playlist to be added
      */
-    void addPlaylist(Playlist playlist);
+    void addPlaylist(Playlist playlist) throws SQLException;
 
     /**
      * Deletes the desired playlist from the playlist database, as well as
@@ -38,7 +39,7 @@ public interface IPlaylistDataAccess {
      * Updates the name of the playlist within the database
      * @param playlist the playlist to be updated
      */
-    void updatePlaylist(Playlist playlist);
+    void updatePlaylist(Playlist playlist) throws SQLException;
 
     /**
      * Retrieves all songs in a playlist and sorts them by index in playlist

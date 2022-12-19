@@ -30,7 +30,6 @@ public class ConnectionManager {
             props.load(new FileReader(CONFIG_FILE_NAME));
         } catch (IOException e) {
             System.out.println("Config file could not be loaded");
-            //throw new RuntimeException(e);
         }
 
         ds.setServerName(props.getProperty("SERVER"));
@@ -48,7 +47,7 @@ public class ConnectionManager {
             return con;
         } else {
             Connection con = unusedConnections.remove(0);
-            if (con.isValid(0)){
+            if (con.isValid(50)){
                 usedConnections.add(con);
                 return con;
             } else {

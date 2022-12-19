@@ -15,7 +15,8 @@ public class NewGenreViewController {
         this.model = model;
     }
 
-    public void saveButtonAction(ActionEvent actionEvent) {
+    @FXML
+    private void saveButtonAction(ActionEvent actionEvent) {
         String name = nameTextField.getText().trim();
         if (!name.isEmpty())
             nameTextField.promptTextProperty().setValue("");
@@ -30,7 +31,8 @@ public class NewGenreViewController {
             nameTextField.promptTextProperty().setValue("Field must not be empty!");
     }
 
-    public void cancelButtonAction(ActionEvent actionEvent) {
+    @FXML
+    private void cancelButtonAction(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();
         node.getScene().getWindow().hide();
     }
