@@ -32,8 +32,6 @@ public class DAOTools {
         } finally {
             cm.releaseConnection(con);
         }
-
-
     }
 
     /**
